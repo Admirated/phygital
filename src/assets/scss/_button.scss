@@ -1,0 +1,27 @@
+.btn {
+	border-radius: 10px;
+	padding: 16px 40px;
+	font-family: Roboto, sans-serif;
+	font-size: 16px;
+	line-height: 17px;
+	font-weight: 400;
+	text-align: center;
+	color: white;
+
+	&.color {
+		&-black {
+			background-color: var(--black);
+			border: 1px solid var(--black);
+		}
+		&-main {
+			background-color: var(--main);
+			border: 1px solid var(--main);
+		}
+	}
+	&.btn-outline {
+		&.color-black {
+			background: none;
+			color: var(--black);
+		}
+	}
+}
