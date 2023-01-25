@@ -1,5 +1,5 @@
 <template>
-	<header>
+	<header class="header">
 		<div class="header__container">
 			<div class="header__logo">
 				<RouterLink :to="{ name: 'Home' }">
@@ -59,6 +59,7 @@ export default {
 	background-color: white;
 	height: 80px;
 	position: sticky;
+	z-index: 99999;
 	top: 0;
 	&__container {
 		margin: 0 auto;
