@@ -85,7 +85,7 @@ export default {
 	display: flex;
 	align-items: center;
 	gap: 48px;
-	&__item {
+	&__item a {
 		font-family: Roboto, sans-serif;
 		font-size: 16px;
 		font-weight: 400;
