@@ -573,7 +573,7 @@ export default {};
 				.home__block-card-image {
 					top: unset;
 					transform: scale(0.5);
-					bottom: -110px;
+					bottom: -125px;
 					right: -20px;
 					z-index: 1;
 				}
@@ -582,7 +582,7 @@ export default {};
 				.home__block-card-image {
 					top: unset;
 					transform: scale(0.6) rotate(-68deg);
-					bottom: -110px;
+					bottom: -132px;
 					right: -30px;
 					z-index: 1;
 				}
@@ -607,6 +607,9 @@ export default {};
 				backdrop-filter: blur(16.6481px);
 				border-radius: 19.3333px;
 				padding-top: 0;
+				div {
+					overflow: hidden;
+				}
 				div img {
 					width: 197px;
 					height: 197px;
@@ -633,9 +636,13 @@ export default {};
 		}
 	}
 	.listings {
-		margin: 0 20px;
+		margin-top: 0;
+		padding: 0 20px;
 		&__cards::before {
 			display: none;
+		}
+		&__cards {
+			justify-content: center;
 		}
 		&__card {
 			width: 100%;
