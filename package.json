@@ -8,6 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
+    "bootstrap": "^5.2.3",
     "sass": "^1.57.1",
     "vite-svg-loader": "^4.0.0",
     "vue": "^3.2.45",
