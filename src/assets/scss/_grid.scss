@@ -3,3 +3,8 @@ section {
 	max-width: 1440px;
 	width: 100%;
 }
+@media screen and (max-width: 528px) {
+	body {
+		background-color: white;
+	}
+}

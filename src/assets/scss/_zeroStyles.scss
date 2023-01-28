@@ -37,7 +37,7 @@ body {
 	text-rendering: optimizeSpeed;
 	line-height: 1.5;
 	font-family: Roboto, sans-serif;
-	// background-color: var(--main-background);
+	background-color: #f7f8f8;
 }
 
 ul[class],
@@ -48,6 +48,9 @@ ol[class] {
 a {
 	text-decoration-skip-ink: auto;
 	text-decoration: none;
+	&:visited {
+		color: var(--black);
+	}
 }
 
 img {

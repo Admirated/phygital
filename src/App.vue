@@ -17,6 +17,7 @@
 	@import "assets/scss/_variables.scss";
 
 	.main-bg {
+		max-width: 1440px;
 		width: 100%;
 		height: 177px;
 		margin: 0 auto;
