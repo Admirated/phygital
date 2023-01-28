@@ -16,13 +16,13 @@
                 </div>
                 <div class="col-12 col-lg-5 pt-5 pt-lg-2 ps-lg-3 ps-xl-5">
                     <strong>Have a property to list or project to fund?</strong>
-                    <UIIcon path="separator" />
+                    <UIIcon path="Separator" />
                     <div class="pt-3 pb-4 w-75">We're eager to hear from you, contact us today so we can discuss it further.</div>
                     <button class="btn btn-outline color-main mb-0 mb-lg-3">Submit a property</button>
                 </div>
                 <div class="col-12 col-lg-4 col-xl-5 pt-5 pt-lg-2 mb-3 mb-lg-0">
                     <strong>Documents</strong>
-                    <UIIcon path="separator" />
+                    <UIIcon path="Separator" />
                     <ul class="ps-0">
                         <li class="pt-3">
                             <RouterLink :to="{ name: '' }" class="d-inline-block">
@@ -66,7 +66,7 @@
         }
         .footer {
             &__reserved {
-                font-family: 'Roboto';
+                font-family: Roboto, sans-serif;
                 font-style: normal;
                 font-weight: 400;
                 font-size: 12px;

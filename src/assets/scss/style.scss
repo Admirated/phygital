@@ -4,6 +4,7 @@
 @import "_typography";
 @import "_button";
 @import "_grid";
+@import "_variables.scss";
 
 html {
   height: 100%;
@@ -11,5 +12,16 @@ html {
     position: relative;
     min-height: 100%;
     overflow: hidden;
+  }
+
+  .card.wave:after {
+    position: absolute;
+    top: -25px;
+    right: -185px;
+    content: url("@/assets/images/icons/Wave.svg");
+    z-index: -1;
+    @media screen and (max-width: $small) {
+      display: none;
+    }
   }
 }

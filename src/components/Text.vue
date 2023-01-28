@@ -18,7 +18,6 @@
     input {
         font-family: KyivType, sans-serif;
         font-style: normal;
-        font-weight: 0;
         font-size: 16px;
         line-height: 100%;
         color: var(--text);
@@ -27,6 +26,6 @@
     }
 
     input::placeholder {
-        color: #DADADA;
+        color: var(--light-gray);
     }
 </style>
