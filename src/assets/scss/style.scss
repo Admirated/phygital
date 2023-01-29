@@ -13,15 +13,65 @@ html {
     min-height: 100%;
     overflow: hidden;
   }
-
-  .card.wave:after {
-    position: absolute;
-    top: -25px;
-    right: -185px;
-    content: url("@/assets/images/icons/Wave.svg");
-    z-index: -1;
+  .card {
+    border-radius: 8px;
     @media screen and (max-width: $small) {
-      display: none;
+      border-radius: 0;
     }
+    &__wave:after {
+      position: absolute;
+      top: -25px;
+      right: -185px;
+      content: url("@/assets/images/icons/Wave.svg");
+      z-index: -1;
+      @media screen and (max-width: $small) {
+        display: none;
+      }
+    }
+    .card-body {
+      padding: 75px 100px;
+      @media screen and (max-width: $small) {
+        padding: 29px 20px;
+      }
+    }
+    h3 {
+      text-transform: uppercase;
+      font-family: ArticulatCF, sans-serif;
+      font-weight: 900;
+      color: var(--black);
+      font-size: 33px;
+    }
+    label.form-label {
+      color: var(--text);
+      font-family: KyivType, sans-serif;
+      font-style: normal;
+      font-size: 12px;
+      margin-bottom: -3px;
+      display: block;
+    }
+    .btn {
+      width: 194px;
+      padding: 11px 0;
+      color: var(--white);
+      &:hover {
+        color: var(--black);
+      }
+      @media screen and (max-width: $small) {
+        width: 100%;
+      }
+    }
+  }
+  .form-check {
+    input[type=checkbox] {
+      width: 18px;
+      height: 18px;
+    }
+    input[type='checkbox']:checked {
+      background-color: var(--main);
+      border-color: var(--main);
+    }
+  }
+  .align-super {
+    vertical-align: super !important;
   }
 }

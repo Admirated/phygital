@@ -36,6 +36,11 @@ const routes = [
         name: "SignUp",
         component: () => import("../pages/SignUp.vue"),
     },
+    {
+        path: "/verification",
+        name: "Verification",
+        component: () => import("../pages/Verification.vue"),
+    },
 ];
 
 const router = createRouter({
