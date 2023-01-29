@@ -19,7 +19,7 @@
 					We're eager to hear from you, contact us today so<br />
 					we can discuss it further.
 				</p>
-				<button class="btn color-main">Submit a property</button>
+				<button class="ui-btn color-main">Submit a property</button>
 			</div>
 			<div class="footer__info">
 				<h4>Documents</h4>
@@ -52,6 +52,7 @@ footer {
 		filter: blur(150px);
 	}
 }
+
 .footer {
 	.page__area-title {
 		max-width: 1280px;
@@ -110,6 +111,7 @@ footer {
 		border-radius: 10px;
 	}
 }
+
 @media screen and (max-width: 528px) {
 	.footer {
 		&__container {

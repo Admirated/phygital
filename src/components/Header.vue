@@ -20,8 +20,18 @@
 				</ul>
 			</nav>
 			<div class="header__buttons">
-				<button class="btn btn-outline color-black">Sign Up</button>
-				<button class="btn btn-outline color-main">Sign In</button>
+				<button
+					class="ui-btn btn-outline color-black"
+					@click="$router.push({ name: 'SignUp' })"
+				>
+					Sign Up
+				</button>
+				<button
+					class="ui-btn btn-outline color-main"
+					@click="$router.push({ name: 'SignIn' })"
+				>
+					Sign In
+				</button>
 			</div>
 			<span class="header__burger">
 				<span></span><span></span><span></span
@@ -116,7 +126,6 @@ export default {
 			width: 30px;
 			height: 24px;
 			bottom: 4px;
-
 			span {
 				display: block;
 				position: absolute;
