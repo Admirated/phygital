@@ -8,6 +8,12 @@
 
 html {
   height: 100%;
+  body {
+    background-color: #f7f8f8;
+    @media screen and (max-width: $small) {
+      background-color: var(--white);
+    }
+  }
   #app {
     position: relative;
     min-height: 100%;
@@ -19,7 +25,7 @@ html {
       border-radius: 0;
     }
     &__wave:after {
-      background-image: url("@/assets/images/icons/Wave.png");
+      background-image: url("@/assets/images/wave.png");
       background-size: 100%;
       display: inline-block;
       width: 267px;
@@ -28,7 +34,7 @@ html {
       top: -25px;
       right: -185px;
       z-index: -1;
-      content:"";
+      content: "";
       @media screen and (max-width: $small) {
         width: 144px;
         height: 144px;

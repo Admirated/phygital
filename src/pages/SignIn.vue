@@ -18,7 +18,9 @@
     import Dropdown from "../components/Dropdown.vue";
 
     export default {
-        components: {Dropdown},
+        components: {
+            Dropdown
+        },
         data() {
             return {
                 options: [
