@@ -25,12 +25,17 @@
 		background-size: cover;
 		position: absolute;
 		z-index: 1;
+		left: 0;
+		right: 0;
 	}
 
 	.page {
 		padding-top: 88px;
 		z-index: 2;
 		position: relative;
+		margin: 0 auto;
+		width: 100%;
+		max-width: 1440px;
 	}
 
 	.ellipse {
