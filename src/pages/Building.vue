@@ -1,5 +1,5 @@
 <template>
-    <div class="row m-0 d-flex justify-content-center">
+    <div class="row m-0 mt-lg-5 d-flex justify-content-center">
         <div class="col-12 col-lg-10 p-0">
             <div class="card border-0">
                 <div class="card-body">
@@ -28,7 +28,7 @@
                                                  @click="selectCurrency(currency)"
                                                  v-text="currency"></div>
                                         </div>
-                                        <button class="btn btn-outline color-black mt-4 w-100 mb-5">Invest</button>
+                                        <button class="ui-btn btn-outline color-black mt-4 w-100 mb-5">Invest</button>
                                     </div>
                                 </div>
                             </div>
@@ -194,7 +194,6 @@
     .info-card {
         top: -100px;
         position: relative;
-        width: 90%;
         border-radius: 6px !important;
         font-family: Roboto, sans-serif;
         font-style: normal;
