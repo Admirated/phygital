@@ -21,26 +21,26 @@ const routes = [
 		name: "FAQ",
 		component: () => import("../pages/FAQ.vue"),
 	},
-    {
-        path: "/listings",
-        name: "Listings",
-        component: () => import("../pages/Listings.vue"),
-    },
-    {
-        path: "/sign-in",
-        name: "SignIn",
-        component: () => import("../pages/SignIn.vue"),
-    },
-    {
-        path: "/sign-up",
-        name: "SignUp",
-        component: () => import("../pages/SignUp.vue"),
-    },
-    {
-        path: "/verification",
-        name: "Verification",
-        component: () => import("../pages/Verification.vue"),
-    },
+	{
+		path: "/listings",
+		name: "Listings",
+		component: () => import("../pages/Listings.vue"),
+	},
+	{
+		path: "/sign-in",
+		name: "SignIn",
+		component: () => import("../pages/SignIn.vue"),
+	},
+	{
+		path: "/sign-up",
+		name: "SignUp",
+		component: () => import("../pages/SignUp.vue"),
+	},
+	{
+		path: "/verification",
+		name: "Verification",
+		component: () => import("../pages/Verification.vue"),
+	},
     {
         path: "/building",
         name: "Building",
