@@ -21,12 +21,15 @@
 		width: 100%;
 		height: 177px;
 		margin: 0 auto;
-		background-image: url("@/assets/images/main-bg.png");
+		background: url("@/assets/images/main-bg.png") center;
 		background-size: cover;
 		position: absolute;
 		z-index: 1;
 		left: 0;
 		right: 0;
+		@media screen and (max-width: $small) {
+			height: 115px;
+		}
 	}
 
 	.page {
@@ -36,6 +39,9 @@
 		margin: 0 auto;
 		width: 100%;
 		max-width: 1440px;
+		@media screen and (max-width: $small) {
+			padding-top: 115px;
+		}
 	}
 
 	.ellipse {

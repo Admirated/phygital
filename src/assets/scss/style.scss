@@ -19,13 +19,22 @@ html {
       border-radius: 0;
     }
     &__wave:after {
+      background-image: url("@/assets/images/icons/Wave.png");
+      background-size: 100%;
+      display: inline-block;
+      width: 267px;
+      height: 267px;
       position: absolute;
       top: -25px;
       right: -185px;
-      content: url("@/assets/images/icons/Wave.svg");
       z-index: -1;
+      content:"";
       @media screen and (max-width: $small) {
-        display: none;
+        width: 144px;
+        height: 144px;
+        z-index: 1;
+        top: -103px;
+        right: 20px;
       }
     }
     .card-body {

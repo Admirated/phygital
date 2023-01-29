@@ -1,7 +1,7 @@
 <template>
     <div class="row m-0 d-flex justify-content-center">
         <div class="col-12 col-lg-6 col-xl-5 p-0">
-            <div class="card border-0 wave">
+            <div class="card border-0 card__wave">
                 <div class="card-body">
                     <UIIcon class="d-inline-block pe-2 icon-back"
                             path="Back"
