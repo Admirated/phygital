@@ -27,14 +27,19 @@ const routes = [
 		component: () => import("../pages/Listings.vue"),
 	},
 	{
-		path: "/login",
+		path: "/sign-in",
 		name: "SignIn",
+		component: () => import("../pages/SignUp.vue"),
+	},
+	{
+		path: "/sign-up",
+		name: "SignUp",
 		component: () => import("../pages/SignIn.vue"),
 	},
 	{
-		path: "/register",
-		name: "SignUp",
-		component: () => import("../pages/SignUp.vue"),
+		path: "/verification",
+		name: "Verification",
+		component: () => import("../pages/Verification.vue"),
 	},
 ];
 

@@ -1,11 +1,19 @@
 <template>
     <div class="row m-0 d-flex justify-content-center">
         <div class="col-12 col-lg-6 col-xl-5 p-0">
+<<<<<<< HEAD
             <div class="card border-0">
                 <div class="card-body">
                     <h3>Sign in</h3>
                     <div class="pt-4">
                         <label>Im a ...</label>
+=======
+            <div class="card border-0 card__wave">
+                <div class="card-body">
+                    <h3>Sign in</h3>
+                    <div class="pt-4">
+                        <label class="form-label">Im a ...</label>
+>>>>>>> origin/arthur
                         <dropdown placeholder="Please Select" :options="options"/>
                     </div>
                 </div>
@@ -29,6 +37,7 @@
             }
         }
     };
+<<<<<<< HEAD
 </script>
 
 <style lang="scss" scoped>
@@ -62,3 +71,6 @@
         }
     }
 </style>
+=======
+</script>
+>>>>>>> origin/arthur

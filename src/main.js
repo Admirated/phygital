@@ -1,9 +1,15 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
+<<<<<<< HEAD
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
 import "./assets/scss/style.scss";
+=======
+import "@/assets/scss/style.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap";
+>>>>>>> origin/arthur
 
 const app = createApp(App);
 

@@ -18,7 +18,10 @@
     input {
         font-family: KyivType, sans-serif;
         font-style: normal;
+<<<<<<< HEAD
         font-weight: 0;
+=======
+>>>>>>> origin/arthur
         font-size: 16px;
         line-height: 100%;
         color: var(--text);
@@ -27,6 +30,10 @@
     }
 
     input::placeholder {
+<<<<<<< HEAD
         color: #DADADA;
+=======
+        color: var(--light-gray);
+>>>>>>> origin/arthur
     }
 </style>
