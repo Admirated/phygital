@@ -40,6 +40,9 @@ html {
       font-weight: 900;
       color: var(--black);
       font-size: 33px;
+      @media screen and (max-width: $small) {
+        font-size: 24px;
+      }
     }
     label.form-label {
       color: var(--text);
@@ -60,6 +63,12 @@ html {
         width: 100%;
       }
     }
+    .icon-back {
+      vertical-align: super;
+      @media screen and (max-width: $small) {
+        vertical-align: text-bottom;
+      }
+    }
   }
   .form-check {
     input[type=checkbox] {
@@ -70,8 +79,5 @@ html {
       background-color: var(--main);
       border-color: var(--main);
     }
-  }
-  .align-super {
-    vertical-align: super !important;
   }
 }
