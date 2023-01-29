@@ -29,12 +29,12 @@ const routes = [
 	{
 		path: "/sign-in",
 		name: "SignIn",
-		component: () => import("../pages/SignUp.vue"),
+		component: () => import("../pages/SignIn.vue"),
 	},
 	{
 		path: "/sign-up",
 		name: "SignUp",
-		component: () => import("../pages/SignIn.vue"),
+		component: () => import("../pages/SignUp.vue"),
 	},
 	{
 		path: "/verification",
