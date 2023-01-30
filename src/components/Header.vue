@@ -33,17 +33,29 @@
 					Sign In
 				</button>
 			</div>
-			<span class="header__burger">
+			<span class="header__burger" @click="isOpen = true">
 				<span></span><span></span><span></span
 			></span>
 		</div>
 	</header>
+	<Slide :isOpen="isOpen"
+		   @closeMenu="isOpen = false">
+		<RouterLink v-for="link in links"
+					@click="isOpen = false"
+					:to="{ path: link.path }">{{ link.title }}</RouterLink>
+	</Slide>
 </template>
 
 <script>
+import { Slide } from 'vue3-burger-menu';
+
 export default {
+    components: {
+        Slide
+    },
 	data() {
 		return {
+            isOpen: false,
 			links: [
 				{
 					title: "Listings",
@@ -124,7 +136,7 @@ export default {
 			display: block;
 			position: relative;
 			width: 30px;
-			height: 24px;
+			height: 25px;
 			bottom: 4px;
 			span {
 				display: block;
@@ -140,7 +152,7 @@ export default {
 				top: 0px;
 			}
 			span:nth-child(2) {
-				bottom: 10px;
+				bottom: 11px;
 			}
 			span:nth-child(3) {
 				bottom: 0px;

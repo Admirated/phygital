@@ -1,0 +1,22 @@
+.bm-menu {
+  background-color: var(--main);
+  a {
+    font-family: ArticulatCF, sans-serif;
+    color: var(--white);
+    font-weight: 900;
+    min-width: 300px;
+    &:hover {
+      color: var(--white);
+      font-weight: 900;
+    }
+  }
+  .bm-cross {
+    width: 6px !important;
+    height: 28px !important;
+    background: var(--white);
+  }
+}
+
+.bm-burger-button {
+  display: none;
+}
