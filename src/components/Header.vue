@@ -43,6 +43,11 @@
 		<RouterLink v-for="link in links"
 					@click="isOpen = false"
 					:to="{ path: link.path }">{{ link.title }}</RouterLink>
+		<RouterLink @click="isOpen = false"
+					class="mt-5"
+					:to="{ path: 'SignUp' }">Sign Up</RouterLink>
+		<RouterLink @click="isOpen = false"
+					:to="{ path: 'SignIn' }">Sign In</RouterLink>
 	</Slide>
 </template>
 
