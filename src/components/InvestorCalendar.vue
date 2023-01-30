@@ -32,6 +32,8 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "../assets/scss/_variables.scss";
+
     .row {
         gap: 6px;
         .col-1 {
@@ -42,6 +44,9 @@
                 font-size: 12px;
                 line-height: 100%;
                 color: #969696;
+                @media screen and (max-width: $small) {
+                    font-size: 10px;
+                }
             }
         }
     }
