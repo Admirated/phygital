@@ -16,8 +16,8 @@
     background-image: url("@/assets/images/icons/Prev.svg");
     width: 8px;
     height: 16px;
-    cursor: pointer;
     margin: 0 25px 0 0;
+    cursor: pointer;
     @media screen and (max-width: $small) {
       margin: 0 15px 0 0;
     }
@@ -28,9 +28,9 @@
     }
   }
   &__page {
-    cursor: pointer;
     padding: 2px 8px;
     a {
+      cursor: pointer;
       color: var(--black);
       &:hover {
         color: var(--black);
