@@ -60,6 +60,7 @@
         methods: {
             changePage(page) {
                 this.page = page;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
 
