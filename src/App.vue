@@ -32,7 +32,7 @@
 		width: 100%;
 		height: 177px;
 		margin: 0 auto;
-		background: url("@/assets/images/main-bg.png") center;
+		background: url("@/assets/images/main_bg.png") center;
 		background-size: cover;
 		position: absolute;
 		z-index: 1;
@@ -52,6 +52,25 @@
 		max-width: 1440px;
 		@media screen and (max-width: $small) {
 			padding-top: 115px;
+		}
+		&__title {
+			font-family: ArticulatCF, sans-serif;
+			font-style: normal;
+			font-weight: 400;
+			font-size: 33px;
+			line-height: 100%;
+			text-transform: uppercase;
+			color: var(--white);
+			position: absolute;
+			margin-top: -86px;
+			@media screen and (max-width: $small) {
+				font-size: 28px;
+				padding: 0 20px;
+				margin-top: -96px;
+			}
+			span {
+				font-weight: 900;
+			}
 		}
 	}
 
