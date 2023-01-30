@@ -160,7 +160,7 @@
                 this.selectedCurrency = currency;
             },
             numberFormat(number) {
-                return new Intl.NumberFormat('en-IN').format(number);
+                return new Intl.NumberFormat('en-EN').format(number);
             }
         }
     }
