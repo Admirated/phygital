@@ -41,7 +41,7 @@ footer {
 	position: relative;
 	overflow: hidden;
 	margin-top: 100px;
-	&::before {
+	/*&::before {
 		content: "";
 		position: absolute;
 		width: 332px;
@@ -50,7 +50,7 @@ footer {
 		bottom: -140px;
 		background: #27d3dd;
 		filter: blur(150px);
-	}
+	}*/
 }
 
 .footer {

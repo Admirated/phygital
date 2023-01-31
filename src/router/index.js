@@ -41,6 +41,21 @@ const routes = [
 		name: "Verification",
 		component: () => import("../pages/Verification.vue"),
 	},
+    {
+        path: "/building",
+        name: "Building",
+        component: () => import("../pages/Building.vue"),
+    },
+    {
+        path: "/notifications",
+        name: "Notifications",
+        component: () => import("../pages/Notifications.vue"),
+    },
+    {
+        path: "/investors",
+        name: "Investors",
+        component: () => import("../pages/Investors.vue"),
+    },
 ];
 
 const router = createRouter({

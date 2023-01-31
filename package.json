@@ -8,7 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@kyvg/vue3-notification": "^2.8.0",
     "@popperjs/core": "^2.11.6",
+    "@svifty7/vue-paginate": "^0.0.10",
     "@wagmi/core": "^0.9.0",
     "@web3modal/ethereum": "^2.0.0",
     "@web3modal/html": "^2.0.0",
