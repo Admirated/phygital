@@ -20,10 +20,12 @@
 </template>
 
 <script>
+import { connect, disconnect } from "@/api/wallet";
 export default {
 	name: "VerificationWallet",
 	data() {
 		return {
+			address: "",
 			wallets: [
 				// {
 				// 	title: "MetaMask",
@@ -42,6 +44,12 @@ export default {
 				// },
 			],
 		};
+	},
+	methods: {
+		async connectWallet() {
+			this.address = await connect();
+			console.log(this.address);
+		},
 	},
 };
 </script>
