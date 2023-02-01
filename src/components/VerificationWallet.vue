@@ -20,9 +20,16 @@
 </template>
 
 <script>
-import { connect, disconnect } from "@/api/wallet";
+import { connect } from "@/api/wallet";
+import { signUpWithWallet } from "@/api/auth";
 export default {
 	name: "VerificationWallet",
+	props: {
+		description: {
+			type: String,
+			required: true,
+		},
+	},
 	data() {
 		return {
 			address: "",
@@ -48,7 +55,11 @@ export default {
 	methods: {
 		async connectWallet() {
 			this.address = await connect();
-			console.log(this.address);
+			const res = await signUpWithWallet(this.address, this.description);
+			if (!res.detail) {
+				this.$store.commit("authenticate");
+				this.$router.push({ name: "Home" });
+			}
 		},
 	},
 };
