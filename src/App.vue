@@ -1,6 +1,6 @@
 <template>
 	<Header />
-	<notifications width="476px" v-if="windowWidth >= notifyMinWidth" />
+	<!-- <notifications width="476px" v-if="windowWidth >= notifyMinWidth" /> -->
 	<div class="main-bg"></div>
 	<div class="page">
 		<RouterView />
