@@ -1,14 +1,36 @@
 <template>
-	<input type="text" class="p-0 pb-2 w-100" :placeholder="placeholder" />
+	<input
+		:type="type"
+		class="p-0 pb-2 w-100"
+		:placeholder="placeholder"
+		:name="name"
+		@input="changeText"
+	/>
 </template>
 
 <script>
 export default {
 	name: "Text",
+	emits: ["update:modelValue"],
 	props: {
 		placeholder: {
 			type: String,
 			default: "",
+		},
+		name: {
+			type: String,
+			default: "",
+			required: false,
+		},
+		type: {
+			type: String,
+			default: "text",
+			required: false,
+		},
+	},
+	methods: {
+		changeText(text) {
+			this.$emit("update:modelValue", text.target.value);
 		},
 	},
 };

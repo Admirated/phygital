@@ -19,7 +19,7 @@
 					</li>
 				</ul>
 			</nav>
-			<div class="header__buttons">
+			<div class="header__buttons" v-if="!this.$store.state.isAuth">
 				<button
 					class="ui-btn btn-outline color-black"
 					@click="$router.push({ name: 'SignUp' })"
@@ -33,34 +33,44 @@
 					Sign In
 				</button>
 			</div>
+			<div class="header__buttons" v-if="this.$store.state.isAuth">
+				<button class="ui-btn btn-outline color-main" @click="logout">
+					Logout
+				</button>
+			</div>
 			<span class="header__burger" @click="isOpen = true">
 				<span></span><span></span><span></span
 			></span>
 		</div>
 	</header>
-	<Slide :isOpen="isOpen"
-		   @closeMenu="isOpen = false">
-		<RouterLink v-for="link in links"
-					@click="isOpen = false"
-					:to="{ path: link.path }">{{ link.title }}</RouterLink>
-		<RouterLink @click="isOpen = false"
-					class="mt-5"
-					:to="{ path: 'SignUp' }">Sign Up</RouterLink>
-		<RouterLink @click="isOpen = false"
-					:to="{ path: 'SignIn' }">Sign In</RouterLink>
+	<Slide :isOpen="isOpen" @closeMenu="isOpen = false">
+		<RouterLink
+			v-for="link in links"
+			:key="link.path"
+			@click="isOpen = false"
+			:to="{ path: link.path }"
+			>{{ link.title }}</RouterLink
+		>
+		<RouterLink @click="isOpen = false" class="mt-5" :to="{ path: 'SignUp' }"
+			>Sign Up</RouterLink
+		>
+		<RouterLink @click="isOpen = false" :to="{ path: 'SignIn' }"
+			>Sign In</RouterLink
+		>
 	</Slide>
 </template>
 
 <script>
-import { Slide } from 'vue3-burger-menu';
+import { disconnect } from "@/api/wallet";
+import { Slide } from "vue3-burger-menu";
 
 export default {
-    components: {
-        Slide
-    },
+	components: {
+		Slide,
+	},
 	data() {
 		return {
-            isOpen: false,
+			isOpen: false,
 			links: [
 				{
 					title: "Listings",
@@ -80,6 +90,16 @@ export default {
 				},
 			],
 		};
+	},
+	methods: {
+		async logout() {
+			localStorage.removeItem("_token");
+			if (localStorage.getItem("wallet_address")) {
+				localStorage.removeItem("wallet_address");
+				disconnect();
+			}
+			this.$router.go(this.$router.currentRoute);
+		},
 	},
 };
 </script>
