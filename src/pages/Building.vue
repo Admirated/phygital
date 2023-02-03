@@ -214,7 +214,13 @@ export default {
 		numberFormat(number) {
 			return new Intl.NumberFormat("en-EN").format(number);
 		},
-		invest() {},
+		invest() {
+			if (this.$store.state.isAuth) {
+				this.$router.push({ name: "Investors" });
+				return;
+			}
+			this.$router.push({ name: "SignIn" });
+		},
 	},
 };
 </script>

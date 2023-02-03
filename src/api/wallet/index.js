@@ -1,6 +1,12 @@
-import { configureChains, createClient, fetchSigner } from "@wagmi/core";
+import {
+	configureChains,
+	createClient,
+	fetchSigner,
+	watchNetwork,
+	switchNetwork,
+} from "@wagmi/core";
 
-import { polygonMumbai } from "@wagmi/core/chains";
+import { polygon } from "@wagmi/core/chains";
 
 import { Web3Modal } from "@web3modal/html";
 
@@ -14,7 +20,7 @@ import {
 
 import { mintAbi } from "../../constants/mintAbi";
 import { paymentAbi } from "../../constants/paymentAbi";
-const chains = [polygonMumbai];
+const chains = [polygon];
 
 // Wagmi Core Client
 export const { provider } = configureChains(chains, [
@@ -40,6 +46,7 @@ export function connect() {
 		web3modal.openModal();
 		let account = ethereumClient.getAccount();
 		if (account.address) {
+			stayWithNetwork();
 			resolve(account.address);
 		} else {
 			const unsubscribe = web3modal.subscribeModal((newState) => {
@@ -51,9 +58,18 @@ export function connect() {
 			ethereumClient.watchAccount((newState) => {
 				if (newState.isConnected) {
 					unsubscribe();
+					stayWithNetwork();
 					resolve(newState.address);
 				}
 			});
+		}
+	});
+}
+
+function stayWithNetwork() {
+	watchNetwork(async (network) => {
+		if (network.chain?.id !== 137) {
+			await switchNetwork({ chainId: 137 });
 		}
 	});
 }
@@ -70,8 +86,8 @@ export function getAccountAddress() {
 	return "";
 }
 
-const nftContractAddress = "0xFc6D8e8c8e79B47eB10C7D26f3625C37783Ae91E";
-const paymentContractAddress = "0x6203704A5148348c3Cc84554769c243f569daBb2";
+const nftContractAddress = "0x5B8EA8563bbBfBfe87271989FC6C5A165565F680";
+const paymentContractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
 
 async function getNftContract() {
 	const signer = await fetchSigner();
@@ -97,12 +113,29 @@ async function getPaymentContract() {
 	return paymentContract;
 }
 
-async function increaseAllowance(value) {
+export async function invest(address, amountNft, objectId) {
+	try {
+		const increased = await increaseAllowance(amountNft);
+		if (!increased) {
+			throw new Error("Need to approve USDT");
+		}
+		const minted = await mintItems(address, amountNft, objectId);
+		if (!minted) {
+			throw new Error("NFT doesn't minted");
+		}
+		return { status: true };
+	} catch (e) {
+		console.log(e);
+		return { status: false, error: e.message };
+	}
+}
+
+async function increaseAllowance(amountNft) {
 	try {
 		const paymentContract = await getPaymentContract();
 		const txHash = await paymentContract.increaseAllowance(
 			nftContractAddress,
-			(value * 10 ** 18).toString()
+			(amountNft * 10 ** 18).toString()
 		);
 		console.log(txHash);
 		await txHash.wait();
@@ -113,11 +146,10 @@ async function increaseAllowance(value) {
 	}
 }
 
-async function mintItems(address, value) {
+async function mintItems(address, amountNft, objectId) {
 	try {
 		const nftContract = await getNftContract();
-		const txHash = await nftContract.mintItems(address, value, {
-			value: 0,
+		const txHash = await nftContract.mintItems(address, amountNft, objectId, {
 			gasLimit: 3_100_000,
 		});
 		console.log(txHash);

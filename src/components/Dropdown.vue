@@ -6,11 +6,16 @@
 			id="dropdownMenuButton1"
 			data-bs-toggle="dropdown"
 			aria-expanded="false"
+			@click="isDropdownHide = false"
 			v-text="text"
 		></button>
-		<ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
+		<ul
+			:class="{ hide: isDropdownHide, show: !isDropdownHide }"
+			class="dropdown-menu w-100"
+			aria-labelledby="dropdownMenuButton1"
+		>
 			<li v-for="option in options" @click="select(option)">
-				<a class="dropdown-item" href="#" v-text="option"></a>
+				<a class="dropdown-item" v-text="option"></a>
 			</li>
 		</ul>
 	</div>
@@ -40,6 +45,7 @@ export default {
 	data() {
 		return {
 			text: null,
+			isDropdownHide: true,
 		};
 	},
 	mounted() {
@@ -52,6 +58,7 @@ export default {
 	methods: {
 		select(option) {
 			this.text = option;
+			this.isDropdownHide = true;
 			this.$emit("select", option);
 		},
 	},

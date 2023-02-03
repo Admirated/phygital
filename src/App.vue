@@ -53,7 +53,7 @@ export default {
 	left: 0;
 	right: 0;
 	@media screen and (max-width: $small) {
-		height: 115px;
+		height: 177px;
 	}
 }
 
@@ -65,7 +65,7 @@ export default {
 	width: 100%;
 	max-width: 1440px;
 	@media screen and (max-width: $small) {
-		padding-top: 115px;
+		padding-top: 90px;
 	}
 	&__title {
 		font-family: ArticulatCF, sans-serif;

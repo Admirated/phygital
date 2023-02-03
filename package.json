@@ -17,6 +17,7 @@
     "bootstrap": "^5.2.3",
     "ethers": "^5.7.2",
     "sass": "^1.57.1",
+    "swiper": "^9.0.1",
     "vite-svg-loader": "^4.0.0",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",

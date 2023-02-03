@@ -125,7 +125,6 @@
 	}
 	&__card {
 		width: 405px;
-		height: 676px;
 		background: white;
 		border-radius: 6px;
 		&-body {
@@ -350,7 +349,6 @@
 		}
 		&__card {
 			width: 100%;
-			max-width: calc(100% - 40px);
 			height: fit-content;
 			&:not(:first-child) {
 				display: none;

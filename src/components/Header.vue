@@ -51,10 +51,10 @@
 			:to="{ path: link.path }"
 			>{{ link.title }}</RouterLink
 		>
-		<RouterLink @click="isOpen = false" class="mt-5" :to="{ path: 'SignUp' }"
+		<RouterLink @click="isOpen = false" class="mt-5" :to="{ name: 'SignUp' }"
 			>Sign Up</RouterLink
 		>
-		<RouterLink @click="isOpen = false" :to="{ path: 'SignIn' }"
+		<RouterLink @click="isOpen = false" :to="{ name: 'SignIn' }"
 			>Sign In</RouterLink
 		>
 	</Slide>
@@ -74,7 +74,7 @@ export default {
 			links: [
 				{
 					title: "Listings",
-					path: "listings",
+					path: "building",
 				},
 				{
 					title: "About",
@@ -82,11 +82,7 @@ export default {
 				},
 				{
 					title: "How It Works",
-					path: "FAQ",
-				},
-				{
-					title: "Services",
-					path: "services",
+					path: "about",
 				},
 			],
 		};
