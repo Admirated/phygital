@@ -1,19 +1,22 @@
 <template>
 	<div class="invest" @click.stop="closeModal">
 		<div class="invest__container" @click.stop>
-			<div class="invest__close" @click="closeModal"></div>
-			<div class="invest__close">
+			<div class="invest__close" @click="closeModal">
 				<UIIcon path="invest_close" />
 			</div>
 
 			<h2 class="title">INVEST</h2>
 			<div class="pt-4">
-				<label class="form-label">Select amount of nft</label>
-				<dropdown
-					placeholder="Please select amount"
-					:options="options"
-					@select="selectOption"
+				<Text
+					placeholder="Write from 1 to 20 NFT"
+					v-model="selectedAmount"
+					type="number"
+					name="amount"
 				/>
+
+				<label class="form-check-label w-75 pt-1 ps-1" for="check2"
+					>Type amount of nft (1-20)</label
+				>
 			</div>
 			<button class="ui-btn btn-outline color-main" @click="invest">
 				Invest
@@ -40,11 +43,15 @@ export default {
 			this.$emit("closeModal");
 		},
 		async invest() {
-			if (!this.selectedAmount) {
+			if (
+				!this.selectedAmount ||
+				this.selectedAmount < 1 ||
+				this.selectedAmount > 20
+			) {
 				return;
 			}
 			if (!this.$store.state.isAuth) {
-				this.$router.push({ name: "SignIn" });
+				this.$router.push({ name: "SignUp" });
 				return;
 			}
 			const walletAddress = localStorage.getItem("wallet_address");

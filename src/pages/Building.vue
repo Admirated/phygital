@@ -6,21 +6,18 @@
 					<div class="row m-0">
 						<div class="col-12 col-lg-6 p-0 px-2 px-lg-0">
 							<div class="d-flex align-items-center">
-								<h3 class="pe-1" v-text="title"></h3>
-								<UIIcon
-									class="flag-icon ps-2"
-									:path="'Flag_' + country_code"
-								/>
+								<h3 class="pe-1" v-text="object.area"></h3>
+								<UIIcon class="flag-icon ps-2" :path="object.country" />
 							</div>
 							<p
 								class="description pe-0 pe-lg-5"
-								v-text="description"
+								v-text="object.description"
 							></p>
 							<p class="status">
-								<span v-text="status"></span> | Published on
-								<span v-text="published_at"></span>
+								<span v-text="object.isActive"></span> | Published on
+								<span v-text="object.published"></span>
 								<span
-									v-text="published_ago"
+									v-text="`26 days ago`"
 									class="d-inline-block"
 								></span>
 							</p>
@@ -32,7 +29,9 @@
 										class="price mb-2 pb-1"
 										v-html="priceText"
 									></div>
-									<ProgressBar :percent="this.price.percent" />
+									<ProgressBar
+										:percent="(object.invested / object.total) * 100"
+									/>
 									<div
 										class="investor-counter mt-2 pt-1"
 										v-text="investorCounter"
@@ -94,13 +93,13 @@
 					</div>
 					<div class="row m-0 mt-3 mt-lg-5">
 						<div class="col-12 p-0 photo-row">
-							<img :src="image" />
+							<img :src="object.img" />
 						</div>
 					</div>
 					<div class="row m-0 mt-4">
 						<div class="col-12 p-0 info-row">
-							<span class="d-block" v-text="info_title"></span>
-							<p class="pe-3 pe-lg-4" v-text="info_description"></p>
+							<span class="d-block" v-text="object.title"></span>
+							<p class="pe-3 pe-lg-4" v-text="object.info"></p>
 						</div>
 					</div>
 				</div>
@@ -111,28 +110,14 @@
 
 <script>
 import ProgressBar from "../components/ProgressBar.vue";
-
+import { getObjectById } from "@/api/objects";
 export default {
 	components: {
 		ProgressBar,
 	},
 	data() {
 		return {
-			title: "Plaza de Nadal",
-			country_code: "es",
-			description:
-				"Build your Real Estate Portfolio. Meet phygital real estate, a simple, secure real estate investment platform who joins developers, whales and crypto investors.",
-			status: "Active",
-			published_at: "December 15, 2022",
-			published_ago: "(33 days ago)",
-			price: {
-				currency: "€",
-				up: 365564,
-				to: 680000,
-				percent: 53.76,
-				days: 26,
-			},
-			investors: 364,
+			object: {},
 			selectedCurrency: null,
 			currencies: ["USD", "BTC", "USDC"],
 			features: [
@@ -157,33 +142,39 @@ export default {
 					text: "3.5",
 				},
 			],
-			image: "/src/assets/images/building.png",
-			info_title: "Architecturally stunning, this sp",
-			info_description:
-				"Architecturally stunning, this split level, open floor concept penthouse features floor to ceiling Diamond Head, Pacific Ocean, and mountain views. 23' vaulted ceiling heights bring in breathtaking views from across the island. Watch the sunrise or sunset while soaking in the tub, or from your kitchen table. You and your guest will be delighted here.",
 		};
+	},
+	created() {
+		const id = this.$route.params.id;
+		getObjectById(id).then((res) => {
+			if (res.id) {
+				this.object = res;
+			}
+		});
 	},
 	computed: {
 		priceText() {
 			return (
-				this.numberFormat(this.price.up) +
+				this.numberFormat(this.object.invested) +
 				" " +
-				this.price.currency +
+				"€" +
 				" <span>/ " +
-				this.numberFormat(this.price.to) +
+				this.numberFormat(this.object.total) +
 				" " +
-				this.price.currency +
+				"€" +
 				"</span>" +
 				' <span class="percent ps-2">(' +
-				this.numberFormat(this.price.percent) +
+				this.numberFormat(
+					(this.object.invested / this.object.total) * 100
+				) +
 				"%)</span>" +
 				' <span class="date float-end">' +
-				this.price.days +
+				this.getDaysByDeadline(this.object.deadline) +
 				" days left</span>"
 			);
 		},
 		investorCounter() {
-			return this.investors + " Investors";
+			return this.object.investors + " Investors";
 		},
 	},
 	mounted() {
@@ -220,6 +211,13 @@ export default {
 				return;
 			}
 			this.$router.push({ name: "SignIn" });
+		},
+		getDaysByDeadline(deadline) {
+			const dateNow = Date.now() / 1000;
+			if (deadline - dateNow <= 0) {
+				return 0;
+			}
+			return deadline - dateNow / 86400;
 		},
 	},
 };

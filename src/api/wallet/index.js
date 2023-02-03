@@ -150,7 +150,7 @@ async function mintItems(address, amountNft, objectId) {
 	try {
 		const nftContract = await getNftContract();
 		const txHash = await nftContract.mintItems(address, amountNft, objectId, {
-			gasLimit: 3_100_000,
+			gasLimit: 3_500_000,
 		});
 		console.log(txHash);
 		return true;

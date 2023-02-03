@@ -33,7 +33,7 @@ const routes = [
 	},
 
 	{
-		path: "/building",
+		path: "/object/:id(\\d+)",
 		name: "Building",
 		component: () => import("../pages/Building.vue"),
 	},

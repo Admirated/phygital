@@ -78,10 +78,13 @@
 					navigation
 					:pagination="{ clickable: true }"
 				>
-					<swiper-slide
+					<swiper-slide v-for="object in objects" :key="object.id"
 						><div class="listings__card">
 							<div class="listings__card-image">
-								<img src="@/assets/images/listings_card1.png" alt="" />
+								<img
+									:src="`@/assets/images/${object.img}.png`"
+									alt=""
+								/>
 							</div>
 							<div class="listings__card-body">
 								<div class="listings__card-title">
@@ -92,12 +95,12 @@
 										/>
 									</div>
 									<div class="listings__card-name">
-										<p>Plaza de Nadal</p>
-										<span>Barcelona | 1 building</span>
+										<p>{{ object.area }}</p>
+										<span>{{ object.city }}</span>
 									</div>
 									<div class="listings__card-flag">
 										<img
-											src="@/assets/images/listings_flag.png"
+											:src="`@/assets/images/${object.country}.png`"
 											alt=""
 										/>
 									</div>
@@ -105,17 +108,32 @@
 								<div class="listings__card-invest">
 									<div class="listings__card-invest-head">
 										<p>
-											365,564 € <span class="total">/ 680,000 €</span
-											><span class="percent">(53.76%)</span>
+											{{ object.invested }}
+											<span class="total"
+												>/ {{ object.total }} €</span
+											><span class="percent"
+												>({{
+													(object.invested / object.total) * 100
+												}}%)</span
+											>
 										</p>
-										<span class="deadline">26 days left</span>
+										<span class="deadline"
+											>{{ getDaysByDeadline(object.deadline) }} days
+											left</span
+										>
 									</div>
 									<div class="listings__card-invest-bar">
-										<div></div>
+										<div
+											:style="`width: ${
+												(object.invested / object.total) * 100
+											}%`"
+										></div>
 									</div>
-									<p class="invest-count">364 investors</p>
+									<p class="invest-count">
+										{{ object.investors }} investors
+									</p>
 								</div>
-								<div class="listings__card-actions">
+								<div class="listings__card-actions hide">
 									<UIIcon
 										path="AA"
 										iconClass="listings__card-action"
@@ -140,214 +158,37 @@
 								<div class="listings__card-info">
 									<div class="listings__card-info-item">
 										<p>Term</p>
-										<p>Month</p>
+										<p>{{ object.term }}</p>
 									</div>
 									<div class="listings__card-info-item">
 										<p>Type</p>
-										<p>Development loan</p>
+										<p>{{ object.type }}</p>
 									</div>
 									<div class="listings__card-info-item">
 										<p>LTV</p>
-										<p>59.41 %</p>
+										<p>{{ object.ltv }} %</p>
 									</div>
 									<div class="listings__card-info-item">
 										<p>Annual yield</p>
-										<p>9.00 %</p>
+										<p>{{ object.annualYeield }} %</p>
 									</div>
 									<div class="listings__card-info-item">
 										<p>Total yield</p>
-										<p>13.50 %</p>
+										<p>{{ object.totalYeield }} %</p>
 									</div>
 								</div>
 								<button
 									class="ui-btn btn-outline color-black"
-									@click="openInvestModal(1)"
+									@click="openInvestModal(object.id)"
 								>
 									Invest
 								</button>
-								<p class="subtitle overview">Overview</p>
-							</div>
-						</div></swiper-slide
-					>
-					<swiper-slide>
-						<div class="listings__card">
-							<div class="listings__card-image">
-								<img src="@/assets/images/listings_card2.png" alt="" />
-							</div>
-							<div class="listings__card-body">
-								<div class="listings__card-title">
-									<div class="listings__card-icon">
-										<img
-											src="@/assets/images/listings_build.png"
-											alt=""
-										/>
-									</div>
-									<div class="listings__card-name">
-										<p>Plaza de Nadal</p>
-										<span>Barcelona | 1 building</span>
-									</div>
-									<div class="listings__card-flag">
-										<img
-											src="@/assets/images/listings_flag.png"
-											alt=""
-										/>
-									</div>
-								</div>
-								<div class="listings__card-invest">
-									<div class="listings__card-invest-head">
-										<p>
-											365,564 € <span class="total">/ 680,000 €</span
-											><span class="percent">(53.76%)</span>
-										</p>
-										<span class="deadline">26 days left</span>
-									</div>
-									<div class="listings__card-invest-bar">
-										<div></div>
-									</div>
-									<p class="invest-count">364 investors</p>
-								</div>
-								<div class="listings__card-actions">
-									<UIIcon
-										path="AA"
-										iconClass="listings__card-action"
-									/>
-									<UIIcon
-										path="Lock"
-										iconClass="listings__card-action"
-									/>
-									<UIIcon
-										path="Hand"
-										iconClass="listings__card-action"
-									/>
-									<UIIcon
-										path="Comments"
-										iconClass="listings__card-action"
-									/>
-									<UIIcon
-										path="Info"
-										iconClass="listings__card-action"
-									/>
-								</div>
-								<div class="listings__card-info">
-									<div class="listings__card-info-item">
-										<p>Term</p>
-										<p>Month</p>
-									</div>
-									<div class="listings__card-info-item">
-										<p>Type</p>
-										<p>Development loan</p>
-									</div>
-									<div class="listings__card-info-item">
-										<p>LTV</p>
-										<p>59.41 %</p>
-									</div>
-									<div class="listings__card-info-item">
-										<p>Annual yield</p>
-										<p>9.00 %</p>
-									</div>
-									<div class="listings__card-info-item">
-										<p>Total yield</p>
-										<p>13.50 %</p>
-									</div>
-								</div>
-								<button
-									class="ui-btn btn-outline color-black"
-									@click="openInvestModal(2)"
+								<p
+									class="subtitle overview"
+									@click="overview(object.id)"
 								>
-									Invest
-								</button>
-								<p class="subtitle overview">Overview</p>
-							</div>
-						</div>
-					</swiper-slide>
-					<swiper-slide
-						><div class="listings__card">
-							<div class="listings__card-image">
-								<img src="@/assets/images/listings_card3.png" alt="" />
-							</div>
-							<div class="listings__card-body">
-								<div class="listings__card-title">
-									<div class="listings__card-icon">
-										<img
-											src="@/assets/images/listings_build.png"
-											alt=""
-										/>
-									</div>
-									<div class="listings__card-name">
-										<p>Plaza de Nadal</p>
-										<span>Barcelona | 1 building</span>
-									</div>
-									<div class="listings__card-flag">
-										<img
-											src="@/assets/images/listings_flag.png"
-											alt=""
-										/>
-									</div>
-								</div>
-								<div class="listings__card-invest">
-									<div class="listings__card-invest-head">
-										<p>
-											365,564 € <span class="total">/ 680,000 €</span
-											><span class="percent">(53.76%)</span>
-										</p>
-										<span class="deadline">26 days left</span>
-									</div>
-									<div class="listings__card-invest-bar">
-										<div></div>
-									</div>
-									<p class="invest-count">364 investors</p>
-								</div>
-								<div class="listings__card-actions">
-									<UIIcon
-										path="AA"
-										iconClass="listings__card-action"
-									/>
-									<UIIcon
-										path="Lock"
-										iconClass="listings__card-action"
-									/>
-									<UIIcon
-										path="Hand"
-										iconClass="listings__card-action"
-									/>
-									<UIIcon
-										path="Comments"
-										iconClass="listings__card-action"
-									/>
-									<UIIcon
-										path="Info"
-										iconClass="listings__card-action"
-									/>
-								</div>
-								<div class="listings__card-info">
-									<div class="listings__card-info-item">
-										<p>Term</p>
-										<p>Month</p>
-									</div>
-									<div class="listings__card-info-item">
-										<p>Type</p>
-										<p>Development loan</p>
-									</div>
-									<div class="listings__card-info-item">
-										<p>LTV</p>
-										<p>59.41 %</p>
-									</div>
-									<div class="listings__card-info-item">
-										<p>Annual yield</p>
-										<p>9.00 %</p>
-									</div>
-									<div class="listings__card-info-item">
-										<p>Total yield</p>
-										<p>13.50 %</p>
-									</div>
-								</div>
-								<button
-									class="ui-btn btn-outline color-black"
-									@click="openInvestModal(3)"
-								>
-									Invest
-								</button>
-								<p class="subtitle overview">Overview</p>
+									Overview
+								</p>
 							</div>
 						</div></swiper-slide
 					>
@@ -358,6 +199,7 @@
 </template>
 
 <script>
+import { getObjects } from "@/api/objects";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination } from "swiper";
 import "swiper/css";
@@ -372,6 +214,7 @@ export default {
 		return {
 			isInvestModalOpen: false,
 			objectId: null,
+			objects: [],
 			breakpoints: {
 				320: {
 					slidesPerView: 1,
@@ -389,10 +232,28 @@ export default {
 			modules: [Pagination],
 		};
 	},
+	created() {
+		getObjects().then((res) => {
+			if (res.objects?.length) {
+				this.objects = res.objects;
+			}
+		});
+	},
 	methods: {
 		openInvestModal(objectId) {
 			this.isInvestModalOpen = true;
 			this.objectId = objectId;
+		},
+		async overview(objectId) {
+			await this.$router.push({ path: `/object/${objectId}` });
+			window.scroll(0, 0);
+		},
+		getDaysByDeadline(deadline) {
+			const dateNow = Date.now() / 1000;
+			if (deadline - dateNow <= 0) {
+				return 0;
+			}
+			return deadline - dateNow / 86400;
 		},
 	},
 };
