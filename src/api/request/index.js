@@ -1,4 +1,4 @@
-const urlRoot = "http://168.119.49.10:8081/";
+const urlRoot = "https://pre.pultik.xyz/";
 
 const request = function (url, method, data, headers = {}) {
 	return fetch(urlRoot + url, {
