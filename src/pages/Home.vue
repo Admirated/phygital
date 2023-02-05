@@ -97,10 +97,7 @@
 											<span>{{ object.city }}</span>
 										</div>
 										<div class="listings__card-flag">
-											<img
-												:src="`@/assets/images/${object.country}.png`"
-												alt=""
-											/>
+											<img :src="getFlag(object.country)" alt="" />
 										</div>
 									</div>
 									<div class="listings__card-invest">
@@ -257,6 +254,10 @@ export default {
 			}
 
 			return Math.floor((deadline - dateNow) / 86400);
+		},
+		getFlag(country) {
+			return new URL(`../assets/images/${country}.webp`, import.meta.url)
+				.href;
 		},
 	},
 };
