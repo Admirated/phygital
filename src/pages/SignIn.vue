@@ -54,7 +54,7 @@ export default {
 	methods: {
 		async login() {
 			const res = await signInWithCreds(this.email, this.password);
-			if (res.access_token) {
+			if (res && res.access_token) {
 				localStorage.setItem(
 					"_token",
 					res.access_token.replace(/['"]/g, "")

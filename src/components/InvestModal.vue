@@ -27,6 +27,7 @@
 
 <script>
 import { invest } from "@/api/wallet";
+import { investWithCreds } from "@/api/objects";
 export default {
 	data() {
 		return {
@@ -64,6 +65,12 @@ export default {
 				if (!res.status) {
 					console.log(res.error);
 				}
+			} else {
+				const res = await investWithCreds(
+					this.objectId,
+					this.selectedAmount
+				);
+				console.log(res);
 			}
 		},
 		selectOption(value) {

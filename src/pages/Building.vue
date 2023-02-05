@@ -14,10 +14,23 @@
 								v-text="object.description"
 							></p>
 							<p class="status">
-								<span v-text="object.isActive"></span> | Published on
-								<span v-text="object.published"></span>
 								<span
-									v-text="`26 days ago`"
+									v-text="object.isActive ? 'Active' : 'Ended'"
+								></span>
+								| Published on
+								<span
+									v-text="
+										new Date(
+											object.published * 1000
+										).toLocaleDateString()
+									"
+								></span>
+								<span
+									v-text="
+										`&nbsp;${getDaysByDeadline(
+											object.published
+										)} days ago`
+									"
 									class="d-inline-block"
 								></span>
 							</p>
@@ -210,14 +223,15 @@ export default {
 				this.$router.push({ name: "Investors" });
 				return;
 			}
-			this.$router.push({ name: "SignIn" });
+			this.$router.push({ name: "SignUp" });
 		},
 		getDaysByDeadline(deadline) {
-			const dateNow = Date.now() / 1000;
+			const dateNow = Math.floor(Date.now() / 1000);
 			if (deadline - dateNow <= 0) {
 				return 0;
 			}
-			return deadline - dateNow / 86400;
+
+			return Math.floor((deadline - dateNow) / 86400);
 		},
 	},
 };

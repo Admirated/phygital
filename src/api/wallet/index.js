@@ -138,8 +138,10 @@ async function increaseAllowance(amountNft) {
 			(amountNft * 10 ** 18).toString()
 		);
 		console.log(txHash);
-		await txHash.wait();
-		return true;
+		const receipt = await txHash.wait();
+		if (receipt && receipt.status == 1) {
+			return true;
+		}
 	} catch (e) {
 		console.log(e);
 		return false;

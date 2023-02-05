@@ -81,10 +81,7 @@
 					<swiper-slide v-for="object in objects" :key="object.id"
 						><div class="listings__card">
 							<div class="listings__card-image">
-								<img
-									:src="`@/assets/images/${object.img}.png`"
-									alt=""
-								/>
+								<img :src="object.img" alt="" />
 							</div>
 							<div class="listings__card-body">
 								<div class="listings__card-title">
@@ -205,8 +202,6 @@ import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import { getNftBalance, claimDividends } from "@/api/wallet";
-
 export default {
 	components: {
 		Swiper,
@@ -240,9 +235,6 @@ export default {
 				this.objects = res.objects;
 			}
 		});
-		claimDividends(localStorage.getItem("wallet_address")).then((res) => {
-			console.log(res);
-		});
 	},
 	methods: {
 		openInvestModal(objectId) {
@@ -254,11 +246,12 @@ export default {
 			window.scroll(0, 0);
 		},
 		getDaysByDeadline(deadline) {
-			const dateNow = Date.now() / 1000;
+			const dateNow = Math.floor(Date.now() / 1000);
 			if (deadline - dateNow <= 0) {
 				return 0;
 			}
-			return deadline - dateNow / 86400;
+
+			return Math.floor((deadline - dateNow) / 86400);
 		},
 	},
 };
