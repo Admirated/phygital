@@ -21,7 +21,6 @@
     "vite-svg-loader": "^4.0.0",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
-    "vue3-burger-menu": "^1.1.1",
     "vuex": "^4.1.0"
   },
   "devDependencies": {

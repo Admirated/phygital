@@ -71,125 +71,130 @@
 					<h3 class="subtitle-black-big">Featured listings</h3>
 					<div class="page__area-line"></div>
 				</div>
-				<swiper
-					class="listings__cards"
-					:breakpoints="breakpoints"
-					:modules="modules"
-					navigation
-					:pagination="{ clickable: true }"
-				>
-					<swiper-slide v-for="object in objects" :key="object.id"
-						><div class="listings__card">
-							<div class="listings__card-image">
-								<img :src="object.img" alt="" />
-							</div>
-							<div class="listings__card-body">
-								<div class="listings__card-title">
-									<div class="listings__card-icon">
-										<img
-											src="@/assets/images/listings_build.png"
-											alt=""
-										/>
-									</div>
-									<div class="listings__card-name">
-										<p>{{ object.area }}</p>
-										<span>{{ object.city }}</span>
-									</div>
-									<div class="listings__card-flag">
-										<img
-											:src="`@/assets/images/${object.country}.png`"
-											alt=""
-										/>
-									</div>
+				<div class="listings__cards-wrapper">
+					<swiper
+						class="listings__cards"
+						:breakpoints="breakpoints"
+						:modules="modules"
+						navigation
+						:pagination="{ clickable: true }"
+					>
+						<swiper-slide v-for="object in objects" :key="object.id"
+							><div class="listings__card">
+								<div class="listings__card-image">
+									<img :src="object.img" alt="" />
 								</div>
-								<div class="listings__card-invest">
-									<div class="listings__card-invest-head">
-										<p>
-											{{ object.invested }}
-											<span class="total"
-												>/ {{ object.total }} €</span
-											><span class="percent"
-												>({{
-													(object.invested / object.total) * 100
-												}}%)</span
+								<div class="listings__card-body">
+									<div class="listings__card-title">
+										<div class="listings__card-icon">
+											<img
+												src="@/assets/images/listings_build.png"
+												alt=""
+											/>
+										</div>
+										<div class="listings__card-name">
+											<p>{{ object.area }}</p>
+											<span>{{ object.city }}</span>
+										</div>
+										<div class="listings__card-flag">
+											<img
+												:src="`@/assets/images/${object.country}.png`"
+												alt=""
+											/>
+										</div>
+									</div>
+									<div class="listings__card-invest">
+										<div class="listings__card-invest-head">
+											<p>
+												{{ object.invested }}
+												<span class="total"
+													>/ {{ object.total }} €</span
+												><span class="percent"
+													>({{
+														(object.invested / object.total) *
+														100
+													}}%)</span
+												>
+											</p>
+											<span class="deadline"
+												>{{
+													getDaysByDeadline(object.deadline)
+												}}
+												days left</span
 											>
+										</div>
+										<div class="listings__card-invest-bar">
+											<div
+												:style="`width: ${
+													(object.invested / object.total) * 100
+												}%`"
+											></div>
+										</div>
+										<p class="invest-count">
+											{{ object.investors }} investors
 										</p>
-										<span class="deadline"
-											>{{ getDaysByDeadline(object.deadline) }} days
-											left</span
-										>
 									</div>
-									<div class="listings__card-invest-bar">
-										<div
-											:style="`width: ${
-												(object.invested / object.total) * 100
-											}%`"
-										></div>
+									<div class="listings__card-actions hide">
+										<UIIcon
+											path="AA"
+											iconClass="listings__card-action"
+										/>
+										<UIIcon
+											path="Lock"
+											iconClass="listings__card-action"
+										/>
+										<UIIcon
+											path="Hand"
+											iconClass="listings__card-action"
+										/>
+										<UIIcon
+											path="Comments"
+											iconClass="listings__card-action"
+										/>
+										<UIIcon
+											path="Info"
+											iconClass="listings__card-action"
+										/>
 									</div>
-									<p class="invest-count">
-										{{ object.investors }} investors
+									<div class="listings__card-info">
+										<div class="listings__card-info-item">
+											<p>Term</p>
+											<p>{{ object.term }}</p>
+										</div>
+										<div class="listings__card-info-item">
+											<p>Type</p>
+											<p>{{ object.type }}</p>
+										</div>
+										<div class="listings__card-info-item">
+											<p>LTV</p>
+											<p>{{ object.ltv }} %</p>
+										</div>
+										<div class="listings__card-info-item">
+											<p>Annual yield</p>
+											<p>{{ object.annualYeield }} %</p>
+										</div>
+										<div class="listings__card-info-item">
+											<p>Total yield</p>
+											<p>{{ object.totalYeield }} %</p>
+										</div>
+									</div>
+									<button
+										class="ui-btn btn-outline color-black"
+										@click="openInvestModal(object.id)"
+									>
+										Invest
+									</button>
+									<p
+										class="subtitle overview"
+										@click="overview(object.id)"
+									>
+										Overview
 									</p>
 								</div>
-								<div class="listings__card-actions hide">
-									<UIIcon
-										path="AA"
-										iconClass="listings__card-action"
-									/>
-									<UIIcon
-										path="Lock"
-										iconClass="listings__card-action"
-									/>
-									<UIIcon
-										path="Hand"
-										iconClass="listings__card-action"
-									/>
-									<UIIcon
-										path="Comments"
-										iconClass="listings__card-action"
-									/>
-									<UIIcon
-										path="Info"
-										iconClass="listings__card-action"
-									/>
-								</div>
-								<div class="listings__card-info">
-									<div class="listings__card-info-item">
-										<p>Term</p>
-										<p>{{ object.term }}</p>
-									</div>
-									<div class="listings__card-info-item">
-										<p>Type</p>
-										<p>{{ object.type }}</p>
-									</div>
-									<div class="listings__card-info-item">
-										<p>LTV</p>
-										<p>{{ object.ltv }} %</p>
-									</div>
-									<div class="listings__card-info-item">
-										<p>Annual yield</p>
-										<p>{{ object.annualYeield }} %</p>
-									</div>
-									<div class="listings__card-info-item">
-										<p>Total yield</p>
-										<p>{{ object.totalYeield }} %</p>
-									</div>
-								</div>
-								<button
-									class="ui-btn btn-outline color-black"
-									@click="openInvestModal(object.id)"
-								>
-									Invest
-								</button>
-								<p
-									class="subtitle overview"
-									@click="overview(object.id)"
-								>
-									Overview
-								</p>
-							</div>
-						</div></swiper-slide
-					>
-				</swiper>
+							</div></swiper-slide
+						>
+					</swiper>
+				</div>
 			</section>
 		</section>
 	</main>

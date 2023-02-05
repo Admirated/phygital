@@ -10,7 +10,7 @@ export function getObjectById(id) {
 
 export function investWithCreds(objectId, amount) {
 	const body = { property_id: objectId, amount };
-	return request("getPaymentLink", "POST", body, {
+	return request("generatePaymentLink", "POST", body, {
 		Authorization: "Bearer " + localStorage.getItem("_token"),
 	});
 }

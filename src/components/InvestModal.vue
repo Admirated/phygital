@@ -66,11 +66,13 @@ export default {
 					console.log(res.error);
 				}
 			} else {
-				const res = await investWithCreds(
+				const link = await investWithCreds(
 					this.objectId,
 					this.selectedAmount
 				);
-				console.log(res);
+				if (link) {
+					this.$router.go(link);
+				}
 			}
 		},
 		selectOption(value) {

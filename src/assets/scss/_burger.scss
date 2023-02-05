@@ -1,22 +1,24 @@
 .bm-menu {
-  background-color: var(--main);
-  a {
-    font-family: ArticulatCF, sans-serif;
-    color: var(--white);
-    font-weight: 900;
-    min-width: 300px;
-    &:hover {
-      color: var(--white);
-      font-weight: 900;
-    }
-  }
-  .bm-cross {
-    width: 6px !important;
-    height: 28px !important;
-    background: var(--white);
-  }
+	background-color: #fff;
+	padding: 20px 26px;
+	a {
+		font-family: ArticulatCF, sans-serif;
+		color: var(--black);
+		font-weight: 700;
+		font-size: 16px;
+		line-height: 16px;
+		min-width: 300px;
+		&._active {
+			color: var(--main);
+		}
+	}
+	.bm-cross {
+		width: 6px !important;
+		height: 28px !important;
+		background: var(--white);
+	}
 }
 
 .bm-burger-button {
-  display: none;
+	display: none;
 }

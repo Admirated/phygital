@@ -43,31 +43,65 @@
 			></span>
 		</div>
 	</header>
-	<Slide :isOpen="isOpen" @closeMenu="isOpen = false">
-		<RouterLink
-			v-for="link in links"
-			:key="link.path"
-			@click="isOpen = false"
-			:to="{ path: link.path }"
-			>{{ link.title }}</RouterLink
-		>
-		<RouterLink @click="isOpen = false" class="mt-5" :to="{ name: 'SignUp' }"
-			>Sign Up</RouterLink
-		>
-		<RouterLink @click="isOpen = false" :to="{ name: 'SignIn' }"
-			>Sign In</RouterLink
-		>
-	</Slide>
+
+	<div class="burger__menu" v-if="isOpen">
+		<div class="burger__menu-head">
+			<div class="header__logo" @click="isOpen = false">
+				<RouterLink :to="{ name: 'Home' }">
+					<UIIcon path="Logo" />
+				</RouterLink>
+			</div>
+			<div class="burger__menu-close" @click="isOpen = false">
+				<UIIcon path="burger_close" />
+			</div>
+		</div>
+
+		<div class="burger__menu-buttons" v-if="this.$store.state.isAuth">
+			<button class="ui-btn btn-outline color-main" @click="logout">
+				Logout
+			</button>
+		</div>
+		<div class="burger__menu-buttons" v-if="!this.$store.state.isAuth">
+			<button
+				class="ui-btn btn-outline color-black"
+				@click="
+					isOpen = false;
+					$router.push({ name: 'SignUp' });
+				"
+			>
+				Sign Up
+			</button>
+
+			<button
+				class="ui-btn btn-outline color-main"
+				@click="
+					isOpen = false;
+					$router.push({ name: 'SignIn' });
+				"
+			>
+				Sign In
+			</button>
+		</div>
+
+		<ul class="burger__navigation">
+			<li
+				class="burger__navigation-item"
+				v-for="link in links"
+				:key="link.path"
+			>
+				<RouterLink @click="isOpen = false" :to="{ path: link.path }">{{
+					link.title
+				}}</RouterLink>
+				<span class="burger__navigation-active"></span>
+			</li>
+		</ul>
+	</div>
 </template>
 
 <script>
 import { disconnect } from "@/api/wallet";
-import { Slide } from "vue3-burger-menu";
 
 export default {
-	components: {
-		Slide,
-	},
 	data() {
 		return {
 			isOpen: false,
@@ -75,14 +109,17 @@ export default {
 				{
 					title: "Listings",
 					path: "building",
+					name: "",
 				},
 				{
 					title: "About",
 					path: "about",
+					name: "About",
 				},
 				{
 					title: "How It Works",
-					path: "about",
+					path: "FAQ",
+					name: "FAQ",
 				},
 			],
 		};
@@ -144,21 +181,89 @@ export default {
 		color: var(--black);
 	}
 }
+.burger__menu {
+	inset: 0;
+	width: 100vw;
+	background-color: #fff;
+	z-index: 90;
+	position: fixed;
+	display: none;
+	padding: 18px 26px;
+	&::before {
+		content: "";
+		width: 332px;
+		height: 155px;
+		position: absolute;
+		background: var(--main);
+		filter: blur(150px);
+		right: -80px;
+		bottom: -200px;
+	}
+}
 @media screen and (max-width: 528px) {
+	.burger {
+		&__menu {
+			display: block;
+			&-head {
+				display: flex;
+				justify-content: space-between;
+				margin-bottom: 38px;
+			}
+		}
+		&__menu-close {
+			width: 30px;
+			height: 30px;
+		}
+		&__menu-buttons {
+			button {
+				width: 100%;
+				margin-bottom: 14px;
+				&:last-child {
+					margin-bottom: 38px;
+				}
+			}
+		}
+		&__navigation {
+			display: flex;
+			flex-direction: column;
+			gap: 50px;
+			&-item {
+				display: flex;
+				gap: 9px;
+				align-items: center;
+				flex-direction: row-reverse;
+				justify-content: flex-end;
+			}
+			&-active {
+				width: 30px;
+				height: 6px;
+				background: var(--main);
+				display: none;
+				border-radius: 25px;
+			}
+			a.router-link-active {
+				color: var(--main);
+				& ~ span {
+					display: block;
+				}
+			}
+		}
+	}
+
 	.header {
 		&__navigation,
 		&__buttons {
 			display: none;
 		}
 		&__container {
-			padding: 20px 28px 10px;
+			padding: 18px 26px 10px;
 		}
 		&__burger {
 			display: block;
 			position: relative;
 			width: 30px;
 			height: 25px;
-			bottom: 4px;
+
 			span {
 				display: block;
 				position: absolute;
