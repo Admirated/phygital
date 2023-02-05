@@ -247,6 +247,13 @@ export const mintAbi = [
 	},
 	{
 		inputs: [],
+		name: "dividendsLimit",
+		outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+		stateMutability: "view",
+		type: "function",
+	},
+	{
+		inputs: [],
 		name: "dividendsPeriod",
 		outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
 		stateMutability: "view",
@@ -257,6 +264,15 @@ export const mintAbi = [
 		name: "dividendsSize",
 		outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
 		stateMutability: "view",
+		type: "function",
+	},
+	{
+		inputs: [
+			{ internalType: "uint256", name: "_propertyID", type: "uint256" },
+		],
+		name: "flipPropertyExistence",
+		outputs: [],
+		stateMutability: "nonpayable",
 		type: "function",
 	},
 	{
@@ -291,20 +307,14 @@ export const mintAbi = [
 		type: "function",
 	},
 	{
-		inputs: [],
-		name: "max_tokens",
-		outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-		stateMutability: "view",
-		type: "function",
-	},
-	{
 		inputs: [
 			{ internalType: "address", name: "_to", type: "address" },
 			{ internalType: "uint256", name: "numberOfItems", type: "uint256" },
+			{ internalType: "uint256", name: "propertyID", type: "uint256" },
 		],
 		name: "mintItems",
 		outputs: [],
-		stateMutability: "payable",
+		stateMutability: "nonpayable",
 		type: "function",
 	},
 	{
@@ -353,6 +363,27 @@ export const mintAbi = [
 		inputs: [],
 		name: "paymentToken",
 		outputs: [{ internalType: "address", name: "", type: "address" }],
+		stateMutability: "view",
+		type: "function",
+	},
+	{
+		inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+		name: "properties",
+		outputs: [{ internalType: "bool", name: "", type: "bool" }],
+		stateMutability: "view",
+		type: "function",
+	},
+	{
+		inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+		name: "propertyMaxTokensCount",
+		outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+		stateMutability: "view",
+		type: "function",
+	},
+	{
+		inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+		name: "propertyTokensCount",
+		outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
 		stateMutability: "view",
 		type: "function",
 	},
@@ -416,6 +447,13 @@ export const mintAbi = [
 	},
 	{
 		inputs: [{ internalType: "uint256", name: "_new", type: "uint256" }],
+		name: "setDividendsLimit",
+		outputs: [],
+		stateMutability: "nonpayable",
+		type: "function",
+	},
+	{
+		inputs: [{ internalType: "uint256", name: "_new", type: "uint256" }],
 		name: "setDividendsPeriod",
 		outputs: [],
 		stateMutability: "nonpayable",
@@ -429,8 +467,21 @@ export const mintAbi = [
 		type: "function",
 	},
 	{
-		inputs: [{ internalType: "uint256", name: "_new", type: "uint256" }],
-		name: "setMaxTokens",
+		inputs: [
+			{ internalType: "uint256", name: "_tokenID", type: "uint256" },
+			{ internalType: "uint256", name: "_blockNumber", type: "uint256" },
+		],
+		name: "setLastDividendsReceived",
+		outputs: [],
+		stateMutability: "nonpayable",
+		type: "function",
+	},
+	{
+		inputs: [
+			{ internalType: "uint256", name: "_propertyID", type: "uint256" },
+			{ internalType: "uint256", name: "_new", type: "uint256" },
+		],
+		name: "setMaxTokensProperty",
 		outputs: [],
 		stateMutability: "nonpayable",
 		type: "function",
@@ -471,11 +522,25 @@ export const mintAbi = [
 		type: "function",
 	},
 	{
+		inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+		name: "tokenDividendsReceived",
+		outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+		stateMutability: "view",
+		type: "function",
+	},
+	{
 		inputs: [
 			{ internalType: "address", name: "owner", type: "address" },
 			{ internalType: "uint256", name: "index", type: "uint256" },
 		],
 		name: "tokenOfOwnerByIndex",
+		outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+		stateMutability: "view",
+		type: "function",
+	},
+	{
+		inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+		name: "tokenProperties",
 		outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
 		stateMutability: "view",
 		type: "function",

@@ -160,7 +160,7 @@ async function mintItems(address, amountNft, objectId) {
 	}
 }
 
-async function getClaimableAmount(address) {
+export async function getClaimableAmount(address) {
 	try {
 		const nftContract = await getNftContract();
 		const res = await nftContract.getClaimableAmount(address);
@@ -171,7 +171,7 @@ async function getClaimableAmount(address) {
 	}
 }
 
-async function claimDividends(address) {
+export async function claimDividends(address) {
 	try {
 		const nftContract = await getNftContract();
 		const txHash = await nftContract.claimDividends(address);
@@ -186,7 +186,7 @@ async function claimDividends(address) {
 	}
 }
 
-async function getNftBalance(address) {
+export async function getNftBalance(address) {
 	try {
 		const nftContract = await getNftContract();
 		const res = await nftContract.balanceOf(address);

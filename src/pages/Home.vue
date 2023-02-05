@@ -205,6 +205,8 @@ import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 
+import { getNftBalance, claimDividends } from "@/api/wallet";
+
 export default {
 	components: {
 		Swiper,
@@ -237,6 +239,9 @@ export default {
 			if (res.objects?.length) {
 				this.objects = res.objects;
 			}
+		});
+		claimDividends(localStorage.getItem("wallet_address")).then((res) => {
+			console.log(res);
 		});
 	},
 	methods: {

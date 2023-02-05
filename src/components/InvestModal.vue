@@ -57,8 +57,8 @@ export default {
 			const walletAddress = localStorage.getItem("wallet_address");
 			if (walletAddress) {
 				const res = await invest(
-					this.selectedAmount,
 					walletAddress,
+					this.selectedAmount,
 					this.objectId
 				);
 				if (!res.status) {

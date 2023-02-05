@@ -1,4 +1,4 @@
-const urlRoot = "https://pre.pultik.xyz/";
+const urlRoot = "https://pre.phygitalreit.xyz/";
 
 const request = function (url, method, data, headers = {}) {
 	return fetch(urlRoot + url, {
