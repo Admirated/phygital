@@ -53,11 +53,23 @@ export default {
 				return;
 			}
 			if (!this.$store.state.isAuth) {
-				this.$router.push({ name: "SignUp" });
+				await this.$router.push({ name: "SignUp" });
+				window.scroll(0, 0);
 				return;
 			}
 			const walletAddress = localStorage.getItem("wallet_address");
 			if (walletAddress) {
+				if (this.$store.state.balance < this.selectedAmount * 0.1) {
+					this.$notify({
+						title: "Error",
+						text: `<span>Your balance is insufficient</span><date>${new Date().toLocaleDateString()}</date>`,
+						duration: 15000,
+						pauseOnHover: true,
+						closeOnClick: false,
+					});
+					window.scroll(0, 0);
+					return;
+				}
 				const res = await invest(
 					walletAddress,
 					this.selectedAmount,

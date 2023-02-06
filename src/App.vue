@@ -1,6 +1,6 @@
 <template>
 	<Header />
-	<notifications width="476px" v-if="windowWidth >= notifyMinWidth" />
+	<notifications :width="windowWidth > 476 ? '476px' : '100%'" />
 	<div class="main-bg"></div>
 	<div class="page" v-if="show">
 		<RouterView />
@@ -140,6 +140,11 @@ export default {
 .vue-notification-group {
 	top: 75px !important;
 	right: 54px !important;
+	@media screen and (max-width: 528px) {
+		right: 0 !important;
+		left: 0 !important;
+		top: 20px !important;
+	}
 	.vue-notification-wrapper {
 		overflow: visible;
 		margin: 0 0 12px 0;

@@ -45,9 +45,6 @@
 				>
 					<UIIcon path="profile" />
 				</span>
-				<!-- <button class="ui-btn btn-outline color-main" @click="logout">
-					Logout
-				</button> -->
 			</div>
 			<span class="header__burger" @click="isOpen = true">
 				<span></span><span></span><span></span
@@ -67,13 +64,21 @@
 			</div>
 		</div>
 
-		<div class="burger__menu-buttons mb-4" v-if="this.$store.state.isAuth">
+		<div
+			class="burger__menu-buttons mb-4 d-flex"
+			v-if="this.$store.state.isAuth"
+		>
 			<span
-				class="profile"
+				class="profile me-3"
 				@click="this.$router.push({ name: 'Investors' })"
 			>
 				<UIIcon path="profile" />
 			</span>
+			<div class="balance d-flex mt-2">
+				<span class="">Balance: {{ this.$store.state.balance }}</span
+				>USDT
+				<span class="balance__icon"><UIIcon path="tether" /></span>
+			</div>
 		</div>
 		<div class="burger__menu-buttons" v-if="!this.$store.state.isAuth">
 			<button
@@ -152,6 +157,23 @@ export default {
 </script>
 
 <style lang="scss">
+.balance {
+	display: flex;
+	gap: 4px;
+	font-family: ArticulatCF, sans-serif;
+	font-size: 16px;
+	font-weight: 700;
+	letter-spacing: 0.5px;
+	color: #9c6fe4;
+	&__icon {
+		width: 18px;
+		height: 18px;
+		position: relative;
+		bottom: 1px;
+		flex-shrink: 0;
+	}
+}
+
 .header {
 	background-color: white;
 	height: 80px;
@@ -160,23 +182,6 @@ export default {
 	left: 0;
 	right: 0;
 	z-index: 88;
-
-	.balance {
-		display: flex;
-		gap: 4px;
-		font-family: ArticulatCF, sans-serif;
-		font-size: 16px;
-		font-weight: 700;
-		letter-spacing: 0.5px;
-		color: #9c6fe4;
-		&__icon {
-			width: 18px;
-			height: 18px;
-			position: relative;
-			bottom: 1px;
-			flex-shrink: 0;
-		}
-	}
 
 	&__container {
 		margin: 0 auto;

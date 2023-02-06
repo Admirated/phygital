@@ -17,7 +17,7 @@
 			:key="object.id"
 		>
 			<div class="card border-0 mb-5 pb-3 mb-lg-4 pb-lg-0">
-				<div class="card-body p-0 px-4 px-lg-0">
+				<div class="card-body p-0 px-4 px-lg-0 investors__card">
 					<img class="d-inline-block" :src="object.img" />
 					<div
 						class="row m-0 d-inline-block p-0 pt-2 pe-lg-5 ps-lg-4 pt-lg-4 investor-row"
@@ -153,7 +153,7 @@ export default {
 				this.$notify({
 					title: "Dividend notices",
 					text: `<span>+${amount} $</span><date>${new Date().toLocaleDateString()}</date>`,
-					duration: 5000,
+					duration: 35000,
 					pauseOnHover: true,
 					closeOnClick: false,
 				});
@@ -189,7 +189,7 @@ export default {
 			this.$notify({
 				title: "Dividend notices",
 				text: `<span>+${res} $</span><date>${new Date().toLocaleDateString()}</date>`,
-				duration: 5000,
+				duration: 35000,
 				pauseOnHover: true,
 				closeOnClick: false,
 			});
@@ -225,7 +225,7 @@ export default {
 		@media screen and (max-width: $small) {
 			height: auto;
 		}
-		img {
+		& > img {
 			border-radius: 8px;
 			max-height: 100%;
 			width: 405px;
@@ -326,9 +326,23 @@ export default {
 			flex-flow: wrap;
 		}
 		.investor-title {
+			position: relative;
+			& > h5 {
+				width: calc(100% - 35px);
+			}
+			.listings__card-flag {
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
 			@media screen and (max-width: $small) {
 				width: calc(100% - 80px);
 			}
+		}
+	}
+	.investors__card {
+		@media screen and (max-width: $small) {
+			padding: 20px !important;
 		}
 	}
 }
