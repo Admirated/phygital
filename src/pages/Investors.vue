@@ -1,4 +1,9 @@
 <template>
+	<InvestModal
+		v-if="isWithdrawModalOpen"
+		:objectId="1"
+		@closeModal="isWithdrawModalOpen = false"
+	/>
 	<div
 		class="row m-0 mt-lg-5 d-block d-lg-flex justify-content-center"
 		v-if="permission"
@@ -6,10 +11,14 @@
 		<div class="col-12 col-lg-11 p-0 mb-4 mb-lg-0">
 			<h2 class="page__title"><span>Investors</span> view</h2>
 		</div>
-		<div class="col-12 col-lg-11 p-0" v-for="investor in investors">
+		<div
+			class="col-12 col-lg-11 p-0"
+			v-for="object in objects"
+			:key="object.id"
+		>
 			<div class="card border-0 mb-5 pb-3 mb-lg-4 pb-lg-0">
 				<div class="card-body p-0 px-4 px-lg-0">
-					<img class="d-inline-block" :src="investor.image" />
+					<img class="d-inline-block" :src="object.img" />
 					<div
 						class="row m-0 d-inline-block p-0 pt-2 pe-lg-5 ps-lg-4 pt-lg-4 investor-row"
 					>
@@ -24,58 +33,48 @@
 							<div class="ps-2 mt-2 mt-lg-3 investor-title">
 								<h5
 									class="mb-1 d-inline-block d-lg-block"
-									v-text="investor.title"
+									v-text="object.area"
 								></h5>
-								<UIIcon
-									class="flag-icon ps-3 d-inline-block d-lg-none"
-									:path="'Flag_' + investor.country_code"
-								/>
+								<div class="listings__card-flag">
+									<img :src="getFlag(object.country)" alt="" />
+								</div>
+
 								<p
 									class="description mb-0 pt-0 pt-lg-1"
-									v-text="investor.description"
+									v-text="object.city"
 								></p>
 							</div>
-							<UIIcon
-								class="flag-icon ps-3 mt-3 d-none d-lg-flex"
-								:path="'Flag_' + investor.country_code"
-							/>
+
 							<div class="feature mt-4 mt-lg-0">
 								<span>Funding target</span>
 								<p
 									class="mb-0 mt-2"
-									v-text="
-										numberFormat(investor.price) +
-										' ' +
-										investor.currency
-									"
+									v-text="numberFormat(object.total) + ' ' + '€'"
 								></p>
 							</div>
 							<div class="feature mt-4 mt-lg-0">
 								<span>Investment term</span>
-								<p class="mb-0 mt-2" v-text="investor.term"></p>
+								<p class="mb-0 mt-2" v-text="object.term"></p>
 							</div>
 							<div class="feature mt-4 mt-lg-0">
 								<span>Est. annual return</span>
 								<p
 									class="mb-0 mt-2"
-									v-text="investor.percent + '%'"
+									v-text="(object.invested / object.total) * 100 + '%'"
 								></p>
 							</div>
 						</div>
 						<hr />
-						<InvestorCalendar month="3" />
-						<div class="col-12 p-0 mt-4 pt-1">
-							<button
-								class="ui-btn btn-outline color-black"
-								@click="this.$router.push({ name: 'Notifications' })"
-							>
-								View
-							</button>
+						<div class="col-12 p-0 mt-5 pt-1 d-flex align-items-center">
+							<div class="dividends">
+								You can withdraw {{ amount }} $
+							</div>
 							<button
 								class="ui-btn btn-outline color-black ms-0 ms-lg-3"
-								disabled
+								:disabled="amount < 0.01"
+								@click="claim"
 							>
-								Withdraw profit
+								Claim profit
 							</button>
 						</div>
 					</div>
@@ -87,59 +86,129 @@
 
 <script>
 import InvestorCalendar from "../components/InvestorCalendar.vue";
+import { getUserWallet } from "@/api/user";
+import {
+	getClaimableAmount,
+	claimDividends,
+	getUSDTBalance,
+} from "@/api/wallet";
+import { getObjects, claimProfitWithCreds } from "@/api/objects";
 
 export default {
 	components: {
 		InvestorCalendar,
 	},
-	created() {
+	mounted() {
 		if (!this.$store.state.isAuth) {
 			this.$router.push({ name: "SignIn" });
 			return;
 		}
 		this.permission = true;
+
+		this.address = localStorage.getItem("wallet_address");
+		if (!this.address) {
+			getUserWallet().then((address) => {
+				if (address) {
+					this.address = address;
+					this.updateClaimedDividends();
+				}
+				this.updateBalance(address);
+			});
+		} else {
+			this.updateClaimedDividends();
+			this.updateBalance(this.address);
+		}
 	},
 	data() {
 		return {
+			timeoutId: null,
 			permission: false,
-			investors: [
-				{
-					image: "/src/assets/images/investors1.png",
-					title: "Plaza de Nadal",
-					description: "Barcelona | 1 building",
-					country_code: "es",
-					price: 363000,
-					currency: "€",
-					term: "4 years",
-					percent: 7.09,
-				},
-				{
-					image: "/src/assets/images/investors2.png",
-					title: "Plaza de Nadal",
-					description: "Barcelona | 1 building",
-					country_code: "es",
-					price: 363000,
-					currency: "€",
-					term: "4 years",
-					percent: 7.09,
-				},
-				{
-					image: "/src/assets/images/investors3.png",
-					title: "Plaza de Nadal",
-					description: "Barcelona | 1 building",
-					country_code: "es",
-					price: 363000,
-					currency: "€",
-					term: "4 years",
-					percent: 7.09,
-				},
-			],
+			address: "",
+			isWithdrawModalOpen: false,
+			amount: 0,
+			objects: [],
 		};
 	},
 	methods: {
 		numberFormat(number) {
 			return new Intl.NumberFormat("en-EN").format(number);
 		},
+		async updateClaimedDividends() {
+			if (this.address) {
+				const amount = await getClaimableAmount(this.address);
+				this.amount = amount / 1_000_000;
+			}
+			this.timeoutId = setTimeout(() => {
+				this.updateClaimedDividends();
+			}, 10000);
+		},
+		getFlag(country) {
+			return new URL(`../assets/images/${country}.webp`, import.meta.url)
+				.href;
+		},
+		async withdraw() {
+			const amount = this.amount;
+			const res = await claimDividends(wa);
+			if (res) {
+				this.$notify({
+					title: "Dividend notices",
+					text: `<span>+${amount} $</span><date>${new Date().toLocaleDateString()}</date>`,
+					duration: 5000,
+					pauseOnHover: true,
+					closeOnClick: false,
+				});
+			} else {
+				this.$notify({
+					title: "Error",
+					text: `<span>Something went wrong. Reload page and try again</span><date>${new Date().toLocaleDateString()}</date>`,
+					duration: 5000,
+					pauseOnHover: true,
+					closeOnClick: false,
+				});
+			}
+			// this.isWithdrawModalOpen = true;
+		},
+		async claim() {
+			const wa = localStorage.getItem("wallet_address");
+			if (wa) {
+				this.withdraw();
+				return;
+			}
+			const res = await claimProfitWithCreds();
+			if (!res) {
+				this.$notify({
+					title: "Error",
+					text: `<span>Something went wrong. Reload page and try again</span><date>${new Date().toLocaleDateString()}</date>`,
+					duration: 5000,
+					pauseOnHover: true,
+					closeOnClick: false,
+				});
+				return;
+			}
+			this.updateBalance(this.address);
+			this.$notify({
+				title: "Dividend notices",
+				text: `<span>+${res} $</span><date>${new Date().toLocaleDateString()}</date>`,
+				duration: 5000,
+				pauseOnHover: true,
+				closeOnClick: false,
+			});
+		},
+		updateBalance(address) {
+			getUSDTBalance(address).then((balance) => {
+				this.$store.commit("updateBalance", balance);
+			});
+		},
+	},
+	created() {
+		getObjects().then((res) => {
+			if (res.objects?.length) {
+				this.objects = res.objects;
+			}
+		});
+	},
+	beforeUnmount() {
+		clearTimeout(this.timeoutId);
 	},
 };
 </script>
@@ -148,6 +217,9 @@ export default {
 @import "../assets/scss/_variables.scss";
 
 .card {
+	.dividends {
+		flex-grow: 1;
+	}
 	.card-body {
 		height: 263px;
 		@media screen and (max-width: $small) {
@@ -157,6 +229,7 @@ export default {
 			border-radius: 8px;
 			max-height: 100%;
 			width: 405px;
+			height: 100%;
 			object-fit: cover;
 			@media screen and (max-width: $small) {
 				width: 100%;

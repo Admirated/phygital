@@ -1,8 +1,8 @@
 <template>
 	<Header />
-	<!-- <notifications width="476px" v-if="windowWidth >= notifyMinWidth" /> -->
+	<notifications width="476px" v-if="windowWidth >= notifyMinWidth" />
 	<div class="main-bg"></div>
-	<div class="page">
+	<div class="page" v-if="show">
 		<RouterView />
 	</div>
 	<div class="ellipse top"></div>
@@ -12,25 +12,44 @@
 
 <script>
 import { getUserInfo } from "@/api/user";
+import { getUSDTBalance } from "@/api/wallet";
+
 export default {
 	data() {
 		return {
 			windowWidth: 0,
 			notifyMinWidth: 992,
+			show: false,
 		};
 	},
 	created() {
-		if (localStorage.getItem("wallet_address")) {
+		let walletAddress = localStorage.getItem("wallet_address");
+		if (walletAddress) {
 			this.$store.commit("authenticate");
+			this.show = true;
+			this.updateBalance(walletAddress);
 			return;
 		}
 		getUserInfo()
 			.then((res) => {
 				if (res.id) {
 					this.$store.commit("authenticate");
+					this.updateBalance(res.wallet_address);
 				}
 			})
-			.catch((e) => console.log(e));
+			.catch((e) => {
+				console.log(e);
+			})
+			.finally(() => {
+				this.show = true;
+			});
+	},
+	methods: {
+		updateBalance(address) {
+			getUSDTBalance(address).then((balance) => {
+				this.$store.commit("updateBalance", balance);
+			});
+		},
 	},
 	mounted() {
 		this.windowWidth = window.innerWidth;

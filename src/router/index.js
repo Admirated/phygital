@@ -14,7 +14,7 @@ const routes = [
 	{
 		path: "/FAQ",
 		name: "FAQ",
-		component: () => import("../pages/FAQ.vue"),
+		component: () => import("../pages/About.vue"),
 	},
 	{
 		path: "/listings",
@@ -36,11 +36,6 @@ const routes = [
 		path: "/object/:id(\\d+)",
 		name: "Building",
 		component: () => import("../pages/Building.vue"),
-	},
-	{
-		path: "/notifications",
-		name: "Notifications",
-		component: () => import("../pages/Notifications.vue"),
 	},
 	{
 		path: "/investors",

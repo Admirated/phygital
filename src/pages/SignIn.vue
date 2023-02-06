@@ -64,7 +64,25 @@ export default {
 					res.refresh_token.replace(/['"]/g, "")
 				);
 				this.$store.commit("authenticate");
-				this.$router.push({ name: "Home" });
+				await this.$router.push({ name: "Home" });
+				this.$notify({
+					title: "Phygital",
+					text: `<span>You are successfully authorized</span><date>${new Date().toLocaleDateString()}</date>`,
+					duration: 5000,
+					pauseOnHover: true,
+					closeOnClick: false,
+				});
+			}
+			if (res.detail) {
+				this.$notify({
+					title: "Error",
+					text: `<span>${
+						res.detail
+					}</span><date>${new Date().toLocaleDateString()}</date>`,
+					duration: 5000,
+					pauseOnHover: true,
+					closeOnClick: false,
+				});
 			}
 		},
 		async connectWallet() {
@@ -73,7 +91,15 @@ export default {
 				this.$store.commit("authenticate");
 				localStorage.setItem("wallet_address", this.address);
 				localStorage.removeItem("_token");
-				this.$router.push({ name: "Home" });
+
+				await this.$router.push({ name: "Home" });
+				this.$notify({
+					title: "Phygital",
+					text: `<span>You are successfully authorized</span><date>${new Date().toLocaleDateString()}</date>`,
+					duration: 5000,
+					pauseOnHover: true,
+					closeOnClick: false,
+				});
 			}
 		},
 	},

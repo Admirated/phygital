@@ -5,3 +5,9 @@ export function getUserInfo() {
 		Authorization: "Bearer " + localStorage.getItem("_token"),
 	});
 }
+
+export function getUserWallet() {
+	return request("getWalletAddress", "GET", null, {
+		Authorization: "Bearer " + localStorage.getItem("_token"),
+	});
+}

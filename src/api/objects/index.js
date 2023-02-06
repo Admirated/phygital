@@ -14,3 +14,9 @@ export function investWithCreds(objectId, amount) {
 		Authorization: "Bearer " + localStorage.getItem("_token"),
 	});
 }
+
+export function claimProfitWithCreds() {
+	return request("claimDividends", "POST", null, {
+		Authorization: "Bearer " + localStorage.getItem("_token"),
+	});
+}

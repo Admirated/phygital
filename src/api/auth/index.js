@@ -7,7 +7,7 @@ export function signUpWithWallet(address, description) {
 
 export function signUpWithCreds(email, name, password, description) {
 	const body = { username: email, name, password, description };
-	return request("signup", "POST", body);
+	return request("register", "POST", body);
 }
 
 export function signInWithCreds(email, password) {

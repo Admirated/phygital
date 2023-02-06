@@ -5,6 +5,7 @@ import { store } from "./store";
 import "@/assets/scss/style.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
+import "@/assets/scss/bootstrap_null.scss";
 import Notifications from "@kyvg/vue3-notification";
 import VuePaginatePlugin from "@svifty7/vue-paginate";
 

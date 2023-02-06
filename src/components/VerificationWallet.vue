@@ -59,7 +59,17 @@ export default {
 			if (!res.detail) {
 				this.$store.commit("authenticate");
 				this.$router.push({ name: "Home" });
+				return;
 			}
+			this.$notify({
+				title: "Error",
+				text: `<span>${
+					res.detail
+				}</span><date>${new Date().toLocaleDateString()}</date>`,
+				duration: 5000,
+				pauseOnHover: true,
+				closeOnClick: false,
+			});
 		},
 	},
 };

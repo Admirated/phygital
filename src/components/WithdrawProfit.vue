@@ -5,35 +5,32 @@
 				<UIIcon path="invest_close" />
 			</div>
 
-			<h2 class="title">INVEST</h2>
+			<h2 class="title">WITHDRAW</h2>
 			<div class="pt-4">
 				<Text
-					placeholder="Write from 1 to 20 NFT"
-					v-model="selectedAmount"
+					placeholder="ERC-20 Polygon USDT"
+					v-model="walletAddress"
 					type="number"
 					name="amount"
 				/>
 
 				<label class="form-check-label w-75 pt-1 ps-1" for="check2"
-					>Type amount of NFT (1-20)</label
+					>Paste your ERC-20 Polygon wallet address</label
+				>
 				>
 			</div>
-			<p class="invest__cost">1 NFT cost 0.1 $ (or 0.1 USDT with crypto)</p>
-			<button class="ui-btn btn-outline color-main" @click="invest">
-				Invest
+			<button class="ui-btn btn-outline color-main" @click="withdraw">
+				Withdraw
 			</button>
 		</div>
 	</div>
 </template>
 
 <script>
-import { invest } from "@/api/wallet";
-import { investWithCreds } from "@/api/objects";
 export default {
 	data() {
 		return {
-			options: ["10 NFT", "12 NFT", "14 NFT", "16 NFT", "18 NFT", "20 NFT"],
-			selectedAmount: null,
+			walletAddress: null,
 		};
 	},
 	props: {
@@ -44,7 +41,7 @@ export default {
 		closeModal() {
 			this.$emit("closeModal");
 		},
-		async invest() {
+		async withdraw() {
 			if (
 				!this.selectedAmount ||
 				this.selectedAmount < 1 ||
@@ -75,9 +72,6 @@ export default {
 					this.$router.go(link);
 				}
 			}
-		},
-		selectOption(value) {
-			this.selectedAmount = parseInt(value.split(" "));
 		},
 	},
 };

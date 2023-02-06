@@ -3,10 +3,14 @@ import { createStore } from "vuex";
 export const store = createStore({
 	state: {
 		isAuth: false,
+		balance: 0,
 	},
 	mutations: {
 		authenticate(state) {
 			state.isAuth = true;
+		},
+		updateBalance(state, payload) {
+			state.balance = payload;
 		},
 	},
 });

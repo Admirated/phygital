@@ -89,6 +89,18 @@ export function getAccountAddress() {
 const nftContractAddress = "0x5B8EA8563bbBfBfe87271989FC6C5A165565F680";
 const paymentContractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
 
+const ethersProvider = new ethers.providers.JsonRpcProvider(
+	"https://polygon-rpc.com"
+);
+
+function getNftContractWithoutSigner() {
+	return new ethers.Contract(nftContractAddress, mintAbi, ethersProvider);
+}
+
+function getPaymentContractWithoutSigner() {
+	return new ethers.Contract(paymentContractAddress, mintAbi, ethersProvider);
+}
+
 async function getNftContract() {
 	const signer = await fetchSigner();
 	if (!signer) {
@@ -164,7 +176,7 @@ async function mintItems(address, amountNft, objectId) {
 
 export async function getClaimableAmount(address) {
 	try {
-		const nftContract = await getNftContract();
+		const nftContract = getNftContractWithoutSigner();
 		const res = await nftContract.getClaimableAmount(address);
 		return res.toNumber();
 	} catch (e) {
@@ -190,9 +202,24 @@ export async function claimDividends(address) {
 
 export async function getNftBalance(address) {
 	try {
-		const nftContract = await getNftContract();
+		const nftContract = getNftContractWithoutSigner();
 		const res = await nftContract.balanceOf(address);
 		return res.toNumber();
+	} catch (e) {
+		console.log(e);
+		return false;
+	}
+}
+
+export async function getUSDTBalance(address) {
+	try {
+		const USDTContract = getPaymentContractWithoutSigner();
+		const res = await USDTContract.balanceOf(address);
+		const balance = res.toNumber();
+		if (balance) {
+			return balance / 10 ** 6;
+		}
+		return 0;
 	} catch (e) {
 		console.log(e);
 		return false;

@@ -1,4 +1,9 @@
 <template>
+	<InvestModal
+		v-if="isInvestModalOpen"
+		:objectId="objectId"
+		@closeModal="isInvestModalOpen = false"
+	/>
 	<div class="row m-0 mt-lg-5 d-flex justify-content-center">
 		<div class="col-12 col-lg-10 p-0">
 			<div class="card border-0">
@@ -6,8 +11,13 @@
 					<div class="row m-0">
 						<div class="col-12 col-lg-6 p-0 px-2 px-lg-0">
 							<div class="d-flex align-items-center">
-								<h3 class="pe-1" v-text="object.area"></h3>
-								<UIIcon class="flag-icon ps-2" :path="object.country" />
+								<h3
+									class="pe-1 building__title"
+									v-text="object.area"
+								></h3>
+								<span class="building__flag">
+									<img :src="getFlag(object.country)" alt="" />
+								</span>
 							</div>
 							<p
 								class="description pe-0 pe-lg-5"
@@ -50,19 +60,6 @@
 										v-text="investorCounter"
 									></div>
 									<div class="currency-list mt-4">
-										<span>Accepted currencies:</span>
-										<div class="d-flex mt-1">
-											<div
-												class="currency p-2"
-												v-for="currency in currencies"
-												:key="currency"
-												:class="{
-													selected: currency === selectedCurrency,
-												}"
-												@click="selectCurrency(currency)"
-												v-text="currency"
-											></div>
-										</div>
 										<button
 											class="ui-btn btn-outline color-black mt-4 w-100 mb-5"
 											@click="invest"
@@ -130,9 +127,8 @@ export default {
 	},
 	data() {
 		return {
+			isInvestModalOpen: false,
 			object: {},
-			selectedCurrency: null,
-			currencies: ["USD", "BTC", "USDC"],
 			features: [
 				{
 					icon: "PropertyType",
@@ -166,6 +162,9 @@ export default {
 		});
 	},
 	computed: {
+		objectId() {
+			return this.$route.params.id;
+		},
 		priceText() {
 			return (
 				this.numberFormat(this.object.invested) +
@@ -190,37 +189,13 @@ export default {
 			return this.object.investors + " Investors";
 		},
 	},
-	mounted() {
-		setTimeout(() => {
-			this.$notify({
-				title: "Dividend notices",
-				text: "<span>+2,000.000</span> User Jane Aniston <date>12.12.2023</date>",
-				duration: 5000,
-				pauseOnHover: true,
-				closeOnClick: false,
-			});
-		}, 2000);
-
-		setTimeout(() => {
-			this.$notify({
-				title: "Dividend notices",
-				text: "<span>+2,000.000</span> User Jane Aniston <date>12.12.2023</date>",
-				duration: 5000,
-				pauseOnHover: true,
-				closeOnClick: false,
-			});
-		}, 4000);
-	},
 	methods: {
-		selectCurrency(currency) {
-			this.selectedCurrency = currency;
-		},
 		numberFormat(number) {
 			return new Intl.NumberFormat("en-EN").format(number);
 		},
 		invest() {
 			if (this.$store.state.isAuth) {
-				this.$router.push({ name: "Investors" });
+				this.isInvestModalOpen = true;
 				return;
 			}
 			this.$router.push({ name: "SignUp" });
@@ -233,13 +208,30 @@ export default {
 
 			return Math.floor((deadline - dateNow) / 86400);
 		},
+		getFlag(country) {
+			return new URL(`../assets/images/${country}.webp`, import.meta.url)
+				.href;
+		},
 	},
 };
 </script>
 
 <style lang="scss">
 @import "../assets/scss/_variables.scss";
-
+.building__title {
+	max-width: calc(100% - 90px);
+}
+.building__flag {
+	width: 28px;
+	height: 18px;
+	border-radius: 2px;
+	flex-shrink: 0;
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
 p {
 	font-family: Roboto, sans-serif;
 	font-style: normal;
