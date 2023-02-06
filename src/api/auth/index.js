@@ -2,7 +2,7 @@ import request from "../request";
 
 export function signUpWithWallet(address, description) {
 	const body = { wallet_address: address, description };
-	return request("signup", "POST", body);
+	return request("register", "POST", body);
 }
 
 export function signUpWithCreds(email, name, password, description) {
