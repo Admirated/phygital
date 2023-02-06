@@ -72,7 +72,7 @@ export default {
 					this.selectedAmount
 				);
 				if (link) {
-					this.$router.go(link);
+					window.location.href = link;
 				}
 			}
 		},
