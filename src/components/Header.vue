@@ -70,7 +70,10 @@
 		>
 			<span
 				class="profile me-3"
-				@click="this.$router.push({ name: 'Investors' })"
+				@click="
+					isOpen = false;
+					this.$router.push({ name: 'Investors' });
+				"
 			>
 				<UIIcon path="profile" />
 			</span>

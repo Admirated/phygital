@@ -65,7 +65,9 @@
 							</div>
 						</div>
 						<hr />
-						<div class="col-12 p-0 mt-5 pt-1 d-flex align-items-center">
+						<div
+							class="col-12 p-0 mt-5 pt-1 d-flex align-items-center claim__wrapper"
+						>
 							<div class="dividends">
 								You can withdraw {{ amount }} $
 							</div>
@@ -217,6 +219,15 @@ export default {
 @import "../assets/scss/_variables.scss";
 
 .card {
+	.claim__wrapper {
+		@media screen and (max-width: 528px) {
+			flex-wrap: wrap;
+			margin-top: 1rem !important;
+			justify-content: center;
+			text-align: center;
+			gap: 1rem;
+		}
+	}
 	.dividends {
 		flex-grow: 1;
 	}
