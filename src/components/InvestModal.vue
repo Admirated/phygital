@@ -22,6 +22,9 @@
 			<button class="ui-btn btn-outline color-main" @click="invest">
 				Invest
 			</button>
+			<p class="invest__cost" v-if="txSended">
+				Please, confirm transaction in your wallet
+			</p>
 		</div>
 	</div>
 </template>
@@ -34,6 +37,7 @@ export default {
 		return {
 			options: ["10 NFT", "12 NFT", "14 NFT", "16 NFT", "18 NFT", "20 NFT"],
 			selectedAmount: null,
+			txSended: false,
 		};
 	},
 	props: {
@@ -70,11 +74,15 @@ export default {
 					window.scroll(0, 0);
 					return;
 				}
+
+				this.txSended = true;
 				const res = await invest(
 					walletAddress,
 					this.selectedAmount,
 					this.objectId
 				);
+				this.txSended = false;
+
 				if (!res.status) {
 					console.log(res.error);
 				}
