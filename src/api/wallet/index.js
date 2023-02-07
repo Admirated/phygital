@@ -4,6 +4,7 @@ import {
 	fetchSigner,
 	watchNetwork,
 	switchNetwork,
+	getNetwork,
 } from "@wagmi/core";
 
 import { polygon } from "@wagmi/core/chains";
@@ -66,7 +67,13 @@ export function connect() {
 	});
 }
 
-function stayWithNetwork() {
+async function stayWithNetwork() {
+	const { chain } = getNetwork();
+	if (chain.id !== 137) {
+		await switchNetwork({
+			chainId: 137,
+		});
+	}
 	watchNetwork(async (network) => {
 		if (network.chain?.id !== 137) {
 			await switchNetwork({ chainId: 137 });

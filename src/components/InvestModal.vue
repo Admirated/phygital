@@ -59,15 +59,6 @@ export default {
 			}
 			const walletAddress = localStorage.getItem("wallet_address");
 			if (walletAddress) {
-				this.$notify({
-					title: "balance",
-					text: `<span>Balance: ${this.$store.state.balance} |  amount: ${
-						this.selectedAmount
-					}, ${this.selectedAmount * 0.1}</span>`,
-					duration: 15000,
-					pauseOnHover: true,
-					closeOnClick: false,
-				});
 				if (this.$store.state.balance < this.selectedAmount * 0.1) {
 					this.$notify({
 						title: "Error",
