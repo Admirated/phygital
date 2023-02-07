@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { connect } from "@/api/wallet";
+import { connect, getUSDTBalance } from "@/api/wallet";
 import { signInWithCreds } from "@/api/auth";
 export default {
 	data() {
@@ -91,6 +91,10 @@ export default {
 				this.$store.commit("authenticate");
 				localStorage.setItem("wallet_address", this.address);
 				localStorage.removeItem("_token");
+
+				getUSDTBalance(this.address).then((balance) => {
+					this.$store.commit("updateBalance", balance);
+				});
 
 				await this.$router.push({ name: "Home" });
 				this.$notify({

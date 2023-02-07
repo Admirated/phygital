@@ -5,6 +5,7 @@ import {
 	watchNetwork,
 	switchNetwork,
 	getNetwork,
+	watchAccount,
 } from "@wagmi/core";
 
 import { polygon } from "@wagmi/core/chains";
@@ -12,6 +13,8 @@ import { polygon } from "@wagmi/core/chains";
 import { Web3Modal } from "@web3modal/html";
 
 import { ethers } from "ethers";
+
+import { store } from "../../store";
 
 import {
 	EthereumClient,
@@ -79,6 +82,12 @@ async function stayWithNetwork() {
 			await switchNetwork({ chainId: 137 });
 		}
 	});
+
+	watchAccount((account) => {
+		if (!account.isConnected) {
+			store.commit("logout");
+		}
+	});
 }
 
 export function disconnect() {
@@ -121,7 +130,6 @@ async function getNftContract() {
 async function getPaymentContract() {
 	const signer = await fetchSigner();
 	if (!signer) {
-		alert("signer error");
 		console.log("Not provided signer");
 		return;
 	}
@@ -146,7 +154,6 @@ export async function invest(address, amountNft, objectId) {
 		return { status: true };
 	} catch (e) {
 		console.log(e);
-		alert(e);
 		return { status: false, error: e.message };
 	}
 }
@@ -164,7 +171,6 @@ async function increaseAllowance(amountNft) {
 			return true;
 		}
 	} catch (e) {
-		alert("incr: " + e);
 		console.log(e);
 		return false;
 	}

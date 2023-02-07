@@ -23,13 +23,6 @@ export default {
 		};
 	},
 	created() {
-		let walletAddress = localStorage.getItem("wallet_address");
-		if (walletAddress) {
-			this.$store.commit("authenticate");
-			this.show = true;
-			this.updateBalance(walletAddress);
-			return;
-		}
 		getUserInfo()
 			.then((res) => {
 				if (res.id) {

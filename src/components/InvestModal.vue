@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { invest } from "@/api/wallet";
+import { invest, getUSDTBalance } from "@/api/wallet";
 import { investWithCreds } from "@/api/objects";
 export default {
 	data() {
@@ -89,6 +89,7 @@ export default {
 					this.selectedAmount,
 					this.objectId
 				);
+
 				this.txSended = false;
 
 				if (!res.status) {

@@ -9,6 +9,9 @@ export const store = createStore({
 		authenticate(state) {
 			state.isAuth = true;
 		},
+		logout(state) {
+			state.isAuth = false;
+		},
 		updateBalance(state, payload) {
 			state.balance = payload;
 		},
