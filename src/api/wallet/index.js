@@ -145,6 +145,7 @@ export async function invest(address, amountNft, objectId) {
 		return { status: true };
 	} catch (e) {
 		console.log(e);
+		alert(e);
 		return { status: false, error: e.message };
 	}
 }

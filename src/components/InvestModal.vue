@@ -44,6 +44,14 @@ export default {
 		objectId: { type: Number, required: true },
 	},
 	emits: ["closeModal"],
+	created() {
+		const walletAddress = localStorage.getItem("wallet_address");
+		if (walletAddress) {
+			getUSDTBalance(walletAddress).then((balance) => {
+				this.$store.commit("updateBalance", balance);
+			});
+		}
+	},
 	methods: {
 		closeModal() {
 			this.$emit("closeModal");
