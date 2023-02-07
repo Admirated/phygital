@@ -121,6 +121,7 @@ async function getNftContract() {
 async function getPaymentContract() {
 	const signer = await fetchSigner();
 	if (!signer) {
+		alert("signer error");
 		console.log("Not provided signer");
 		return;
 	}
@@ -163,6 +164,7 @@ async function increaseAllowance(amountNft) {
 			return true;
 		}
 	} catch (e) {
+		alert("incr: " + e);
 		console.log(e);
 		return false;
 	}
