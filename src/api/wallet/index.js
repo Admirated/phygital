@@ -233,7 +233,7 @@ export async function getUSDTBalance(address) {
 		const res = await USDTContract.balanceOf(address);
 		const balance = res.toNumber();
 		if (balance) {
-			return balance / 10 ** 6;
+			return ethers.utils.formatUnits(balance, 6);
 		}
 		return 0;
 	} catch (e) {

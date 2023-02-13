@@ -34,17 +34,39 @@
 				</button>
 			</div>
 			<div class="header__buttons" v-if="this.$store.state.isAuth">
-				<div class="balance">
-					<span>Balance: {{ this.$store.state.balance }}</span
-					>USDT
-					<span class="balance__icon"><UIIcon path="tether" /></span>
-				</div>
 				<span
 					class="profile"
-					@click="this.$router.push({ name: 'Investors' })"
+					@click="isProfileDropdownOpen = !isProfileDropdownOpen"
 				>
 					<UIIcon path="profile" />
 				</span>
+				<div class="menu__dropdown" v-if="isProfileDropdownOpen">
+					<div class="menu__dropdown-item">
+						<div class="balance">
+							<span>Balance: {{ this.$store.state.balance }}</span
+							>USDT
+							<span class="balance__icon"><UIIcon path="tether" /></span>
+						</div>
+					</div>
+					<div
+						class="menu__dropdown-item"
+						@click="isProfileDropdownOpen = false"
+					>
+						<RouterLink :to="{ name: 'Investors' }"
+							>Investitions</RouterLink
+						>
+					</div>
+					<div class="menu__dropdown-item" @click="logout">
+						<p>Logout</p>
+					</div>
+					<div
+						class="menu__dropdown-item"
+						@click="exportSeed"
+						v-if="userCredsAddress"
+					>
+						<p class="export">Export seed phrase</p>
+					</div>
+				</div>
 			</div>
 			<span class="header__burger" @click="isOpen = true">
 				<span></span><span></span><span></span
@@ -68,13 +90,7 @@
 			class="burger__menu-buttons mb-4 d-flex"
 			v-if="this.$store.state.isAuth"
 		>
-			<span
-				class="profile me-3"
-				@click="
-					isOpen = false;
-					this.$router.push({ name: 'Investors' });
-				"
-			>
+			<span class="profile me-3">
 				<UIIcon path="profile" />
 			</span>
 			<div class="balance d-flex mt-2">
@@ -83,6 +99,7 @@
 				<span class="balance__icon"><UIIcon path="tether" /></span>
 			</div>
 		</div>
+
 		<div class="burger__menu-buttons" v-if="!this.$store.state.isAuth">
 			<button
 				class="ui-btn btn-outline color-black"
@@ -117,6 +134,24 @@
 				<span class="burger__navigation-active"></span>
 			</li>
 		</ul>
+		<div
+			class="burger__profile-actions mt-5 pt-2"
+			v-if="$store.getters.getAuthFlag"
+		>
+			<div class="menu__dropdown-item" @click="isOpen = false">
+				<RouterLink :to="{ name: 'Investors' }">Investitions</RouterLink>
+			</div>
+			<div class="menu__dropdown-item" @click="logout">
+				<p>Logout</p>
+			</div>
+			<div
+				class="menu__dropdown-item"
+				@click="exportSeed"
+				v-if="userCredsAddress"
+			>
+				<p class="export">Export seed phrase</p>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -127,6 +162,7 @@ export default {
 	data() {
 		return {
 			isOpen: false,
+			isProfileDropdownOpen: false,
 			links: [
 				{
 					title: "Listings",
@@ -154,6 +190,18 @@ export default {
 				disconnect();
 			}
 			this.$router.go(this.$router.currentRoute);
+		},
+		exportSeed() {
+			this.isProfileDropdownOpen = false;
+			this.isOpen = false;
+			this.$router.push({
+				name: "Thanks",
+			});
+		},
+	},
+	computed: {
+		userCredsAddress() {
+			return this.$store.state.walletAddress;
 		},
 	},
 };
@@ -206,6 +254,7 @@ export default {
 		display: flex;
 		gap: 12px;
 		align-items: center;
+		position: relative;
 	}
 }
 .navigation {
@@ -221,6 +270,33 @@ export default {
 		color: var(--black);
 	}
 }
+.menu {
+	&__dropdown {
+		position: absolute;
+		top: calc(100% + 12px);
+		right: -16px;
+		box-shadow: 1px 4px 10px 0px #c279e952;
+		width: 220px;
+		background: #fff;
+		padding: 12px 16px 6px;
+		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
+	}
+	&__dropdown-item {
+		margin-bottom: 12px;
+		font-family: Roboto, sans-serif;
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 21px;
+		p {
+			cursor: pointer;
+		}
+	}
+}
+.export {
+	color: var(--bs-orange);
+}
+
 .burger__menu {
 	inset: 0;
 	width: 100vw;
@@ -241,13 +317,24 @@ export default {
 	}
 }
 @media screen and (max-width: 528px) {
+	.menu {
+		&__dropdown {
+			display: none;
+		}
+	}
 	.burger {
+		&__profile-actions {
+			border-top: 1px solid var(--bs-gray-400);
+		}
 		&__menu {
 			display: block;
 			&-head {
 				display: flex;
 				justify-content: space-between;
 				margin-bottom: 38px;
+			}
+			.menu__dropdown-item {
+				margin-top: 25px;
 			}
 		}
 		&__menu-close {
@@ -266,7 +353,7 @@ export default {
 		&__navigation {
 			display: flex;
 			flex-direction: column;
-			gap: 50px;
+			gap: 30px;
 			&-item {
 				display: flex;
 				gap: 9px;

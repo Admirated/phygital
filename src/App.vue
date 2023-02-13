@@ -11,9 +11,6 @@
 </template>
 
 <script>
-import { getUserInfo } from "@/api/user";
-import { getUSDTBalance } from "@/api/wallet";
-
 export default {
 	data() {
 		return {
@@ -23,26 +20,9 @@ export default {
 		};
 	},
 	created() {
-		getUserInfo()
-			.then((res) => {
-				if (res.id) {
-					this.$store.commit("authenticate");
-					this.updateBalance(res.wallet_address);
-				}
-			})
-			.catch((e) => {
-				console.log(e);
-			})
-			.finally(() => {
-				this.show = true;
-			});
-	},
-	methods: {
-		updateBalance(address) {
-			getUSDTBalance(address).then((balance) => {
-				this.$store.commit("updateBalance", balance);
-			});
-		},
+		this.$store.dispatch("updateUserInfo").then(() => {
+			this.show = true;
+		});
 	},
 	mounted() {
 		this.windowWidth = window.innerWidth;

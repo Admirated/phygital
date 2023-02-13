@@ -4,10 +4,7 @@
 		:objectId="1"
 		@closeModal="isWithdrawModalOpen = false"
 	/>
-	<div
-		class="row m-0 mt-lg-5 d-block d-lg-flex justify-content-center"
-		v-if="permission"
-	>
+	<div class="row m-0 mt-lg-5 d-block d-lg-flex justify-content-center">
 		<div class="col-12 col-lg-11 p-0 mb-4 mb-lg-0">
 			<h2 class="page__title"><span>Investors</span> view</h2>
 		</div>
@@ -100,13 +97,12 @@ export default {
 	components: {
 		InvestorCalendar,
 	},
-	mounted() {
-		if (!this.$store.state.isAuth) {
-			this.$router.push({ name: "SignIn" });
-			return;
+	beforeCreate() {
+		if (!this.$store.getters.getAuthFlag) {
+			this.$router.push({ name: "SignUp" });
 		}
-		this.permission = true;
-
+	},
+	mounted() {
 		this.address = localStorage.getItem("wallet_address");
 		if (!this.address) {
 			getUserWallet().then((address) => {
@@ -124,7 +120,6 @@ export default {
 	data() {
 		return {
 			timeoutId: null,
-			permission: false,
 			address: "",
 			isWithdrawModalOpen: false,
 			amount: 0,

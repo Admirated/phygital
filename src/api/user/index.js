@@ -11,3 +11,9 @@ export function getUserWallet() {
 		Authorization: "Bearer " + localStorage.getItem("_token"),
 	});
 }
+
+export function getUserPrivateKey() {
+	return request("exportPrivateKey", "GET", null, {
+		Authorization: "Bearer " + localStorage.getItem("_token"),
+	});
+}

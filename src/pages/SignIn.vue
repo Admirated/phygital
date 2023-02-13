@@ -63,14 +63,17 @@ export default {
 					"_token2",
 					res.refresh_token.replace(/['"]/g, "")
 				);
+				localStorage.removeItem("wallet_address");
 				this.$store.commit("authenticate");
 				await this.$router.push({ name: "Home" });
-				this.$notify({
-					title: "Phygital",
-					text: `<span>You are successfully authorized</span><date>${new Date().toLocaleDateString()}</date>`,
-					duration: 5000,
-					pauseOnHover: true,
-					closeOnClick: false,
+				this.$store.dispatch("updateUserInfo").then(() => {
+					this.$notify({
+						title: "Phygital",
+						text: `<span>You are successfully authorized</span><date>${new Date().toLocaleDateString()}</date>`,
+						duration: 5000,
+						pauseOnHover: true,
+						closeOnClick: false,
+					});
 				});
 			}
 			if (res.detail) {
