@@ -57,7 +57,7 @@
 								<span>Est. annual return</span>
 								<p
 									class="mb-0 mt-2"
-									v-text="(object.invested / object.total) * 100 + '%'"
+									v-text="object.annualYield + '%'"
 								></p>
 							</div>
 						</div>

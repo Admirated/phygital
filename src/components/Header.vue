@@ -53,7 +53,7 @@
 						@click="isProfileDropdownOpen = false"
 					>
 						<RouterLink :to="{ name: 'Investors' }"
-							>Investitions</RouterLink
+							>Investments</RouterLink
 						>
 					</div>
 					<div class="menu__dropdown-item" @click="logout">
@@ -139,7 +139,7 @@
 			v-if="$store.getters.getAuthFlag"
 		>
 			<div class="menu__dropdown-item" @click="isOpen = false">
-				<RouterLink :to="{ name: 'Investors' }">Investitions</RouterLink>
+				<RouterLink :to="{ name: 'Investors' }">Investments</RouterLink>
 			</div>
 			<div class="menu__dropdown-item" @click="logout">
 				<p>Logout</p>
